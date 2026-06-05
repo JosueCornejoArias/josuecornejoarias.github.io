@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)file:///C:/Users/jcorn/Downloads/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Josué Cornejo — CRO &amp; Growth PM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./Josué Cornejo — CRO &amp; Growth PM_files/css2" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --text: #1A1A1A;
+    --text-muted: #6B6860;
+    --text-faint: #9C9A95;
+    --accent: #1A3A2A;
+    --accent-light: #E8F0EB;
+    --accent-mid: #2D5C40;
+    --border: rgba(0,0,0,0.08);
+    --border-mid: rgba(0,0,0,0.14);
+    --tag-cro-bg: #E8F0EB;
+    --tag-cro: #1A3A2A;
+    --tag-exp-bg: #EEF2FF;
+    --tag-exp: #2D3A8C;
+    --tag-disc-bg: #FFF7E6;
+    --tag-disc: #7A4F00;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247,245,240,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    background: var(--accent-light);
+    padding: 5px 14px;
+    border-radius: 99px;
+    margin-bottom: 1.75rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent-mid);
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+    max-width: 720px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent-mid);
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+  }
+  .metric {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.1rem;
+  }
+  .metric-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .metric-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.45;
+    font-weight: 400;
+  }
+  .hero-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+    border: none;
+  }
+  .btn-dark {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-dark:hover { background: var(--accent-mid); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border-mid);
+  }
+  .btn-outline:hover { background: var(--surface); }
+
+  /* SECTIONS */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 1.75rem;
+  }
+  hr.divider {
+    max-width: 900px;
+    margin: 0 auto;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* BANNER */
+  .hs-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--accent-light);
+    border: 1px solid rgba(45,92,64,0.18);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin-bottom: 2rem;
+  }
+  .hs-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent-mid);
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .hs-banner p {
+    font-size: 13px;
+    color: var(--accent);
+    line-height: 1.6;
+  }
+
+  /* CASE CARDS */
+  .cases { display: flex; flex-direction: column; gap: 16px; }
+  .case-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    border-left: 3px solid var(--accent);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .case-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+
+  .case-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 99px;
+    letter-spacing: 0.02em;
+  }
+  .tag-cro { background: var(--tag-cro-bg); color: var(--tag-cro); }
+  .tag-exp { background: var(--tag-exp-bg); color: var(--tag-exp); }
+  .tag-disc { background: var(--tag-disc-bg); color: var(--tag-disc); }
+  .tag-neutral { background: #F0EFEB; color: var(--text-muted); }
+
+  .case-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .case-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; }
+
+  .case-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 1.25rem;
+  }
+  .case-metric {
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 0.875rem;
+  }
+  .case-metric-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 3px;
+  }
+  .case-metric-label { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+
+  .case-body { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem; }
+
+  .toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent-mid);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+    transition: color 0.15s;
+  }
+  .toggle-btn:hover { color: var(--accent); }
+  .toggle-btn svg { transition: transform 0.2s; }
+  .toggle-btn.open svg { transform: rotate(180deg); }
+
+  .case-expand {
+    display: none;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .case-expand.open { display: block; }
+
+  .story-step { display: flex; gap: 14px; margin-bottom: 1.25rem; }
+  .step-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 5px; }
+  .step-text { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+  /* LIVE PRODUCTS */
+  .live-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .live-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.375rem;
+    transition: box-shadow 0.2s;
+  }
+  .live-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+  .live-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+  .live-role { font-size: 12px; color: var(--text-faint); margin-bottom: 8px; }
+  .live-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-bottom: 12px; }
+  .live-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent-mid);
+    text-decoration: none;
+  }
+  .live-link:hover { text-decoration: underline; }
+  .live-link svg { opacity: 0.7; }
+
+  /* TOOLS */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+  .tool-chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tool-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent-mid);
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 2rem 3rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .footer-note { font-size: 12px; color: var(--text-faint); line-height: 1.7; max-width: 480px; }
+  .footer-contact { font-size: 13px; color: var(--text-muted); }
+  .footer-contact a { color: var(--accent-mid); text-decoration: none; }
+  .footer-contact a:hover { text-decoration: underline; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero > * {
+    animation: fadeUp 0.5s ease both;
+  }
+  .hero > *:nth-child(1) { animation-delay: 0.05s; }
+  .hero > *:nth-child(2) { animation-delay: 0.12s; }
+  .hero > *:nth-child(3) { animation-delay: 0.18s; }
+  .hero > *:nth-child(4) { animation-delay: 0.24s; }
+  .hero > *:nth-child(5) { animation-delay: 0.30s; }
+
+  @media (max-width: 600px) {
+    .hero-metrics { grid-template-columns: 1fr 1fr; }
+    .case-metrics { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .hero h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="file:///C:/Users/jcorn/Downloads/index.html#" class="nav-name">Josué Cornejo</a>
+  <div class="nav-links">
+    <a href="file:///C:/Users/jcorn/Downloads/index.html#cases">Work</a>
+    <a href="file:///C:/Users/jcorn/Downloads/index.html#live">Live products</a>
+    <a href="file:///C:/Users/jcorn/Downloads/index.html#tools">Tools</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">CRO · Growth PM · Funnel Optimization</div>
+  <h1>I move conversion metrics — <em>and I show my work.</em></h1>
+  <p class="hero-sub">Growth PM with 6+ years shipping consumer and healthcare products across Central America and the Caribbean. I read funnels, form hypotheses, ship experiments, and close the loop with data.</p>
+  <div class="hero-metrics">
+    <div class="metric">
+      <div class="metric-num">~50%</div>
+      <div class="metric-label">scheduling conversion rate lift</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">25%</div>
+      <div class="metric-label">reduction in avg. time-to-book</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">2.1×</div>
+      <div class="metric-label">calculator-to-quote conversion</div>
+    </div>
+  </div>
+  <div class="hero-cta">
+    <a href="file:///C:/Users/jcorn/Downloads/index.html#cases" class="btn btn-dark">View case studies</a>
+    <a href="mailto:josue@example.com" class="btn btn-outline">Get in touch</a>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="cases">
+  <div class="hs-banner">
+    <div class="hs-dot"></div>
+    <p>These 3 cases cover e-commerce funnel optimization, controlled experimentation, and SaaS/app activation — the core skills for any growth-focused PM role.</p>
+  </div>
+  <div class="section-label">Case studies</div>
+  <div class="cases">
+
+    <!-- CASE 1 -->
+    <div class="case-card">
+      <div class="case-tags">
+        <span class="tag tag-cro">Funnel CRO</span>
+        <span class="tag tag-cro">Mobile</span>
+        <span class="tag tag-neutral">Healthcare · B2C</span>
+      </div>
+      <div class="case-title">Scheduling funnel optimization — Blue Medical</div>
+      <div class="case-sub">Web + mobile · Guatemala &amp; Costa Rica · GA4 · Hotjar · ~500–700 daily appointments</div>
+      <div class="case-metrics">
+        <div class="case-metric">
+          <div class="case-metric-num">~50%</div>
+          <div class="case-metric-label">checkout conversion lift</div>
+        </div>
+        <div class="case-metric">
+          <div class="case-metric-num">25%</div>
+          <div class="case-metric-label">avg. time-to-book reduction</div>
+        </div>
+        <div class="case-metric">
+          <div class="case-metric-num">6,500+</div>
+          <div class="case-metric-label">daily unique sessions</div>
+        </div>
+      </div>
+      <p class="case-body">Identified two high-impact drop-off points in a medical scheduling funnel: a mandatory login wall and a doctor/time-slot search that caused users to loop between options. Shipped two targeted interventions and measured results through GA4 and Hotjar.</p>
+      <button class="toggle-btn" onclick="toggle(&#39;e1&#39;, this)">
+        Read full case
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <div class="case-expand" id="e1">
+        <div class="story-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Funnel audit</div>
+            <div class="step-text">Blue Medical's scheduling platform served 6,500–8,000 daily unique sessions in Guatemala and Costa Rica. Using GA4 funnel analysis and Hotjar session recordings, I found only 19–23% of sessions reached the appointment type selection step. Primary blocker: users had to log in or register before seeing any availability — friction before value.</div>
+          </div>
+        </div>
+        <div class="story-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Hypothesis 1 — remove the login wall</div>
+            <div class="step-text">Hypothesis: allowing guest access will push more users past the top-of-funnel drop-off. I wrote the spec, defined the success metric (% of sessions reaching appointment type selection), and coordinated with engineering. After launch, that step improved from 19–23% to 24–28% of sessions.</div>
+          </div>
+        </div>
+        <div class="story-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Hypothesis 2 — smart scheduling suggestions</div>
+            <div class="step-text">Hotjar recordings showed a second problem: users looped between doctors and clinics searching for better time slots, extending booking time and causing mid-funnel abandonment. I proposed "smart suggestions": after specialty selection, show the 3 nearest available slots by location, plus the user's recent doctor if returning. Users could skip and browse manually. Result: avg. scheduling time dropped ~25% and overall conversion improved from ~3.2–4% to ~5.7% of sessions — with flat traffic, meaning pure conversion lift.</div>
+          </div>
+        </div>
+        <div class="story-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Outcome</div>
+            <div class="step-text">Volume shifted from contact center and social media booking channels to self-service digital. Measurement was pre/post via GA4 — no A/B framework in place at the time. Isolating each intervention's contribution would have been the logical next step with a proper testing layer.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE 2 -->
+    <div class="case-card">
+      <div class="case-tags">
+        <span class="tag tag-exp">Experimentation</span>
+        <span class="tag tag-exp">Killed assumption</span>
+        <span class="tag tag-neutral">Healthcare · B2C</span>
+      </div>
+      <div class="case-title">Post-consultation NPS experiment — Blue Medical</div>
+      <div class="case-sub">Controlled experiment · ~500 patients · 4 weeks · Multiple clinics &amp; specialties</div>
+      <div class="case-metrics">
+        <div class="case-metric">
+          <div class="case-metric-num">~500</div>
+          <div class="case-metric-label">patients in experiment</div>
+        </div>
+        <div class="case-metric">
+          <div class="case-metric-num">6%</div>
+          <div class="case-metric-label">actually needed a dr. follow-up</div>
+        </div>
+        <div class="case-metric">
+          <div class="case-metric-num">4 wks</div>
+          <div class="case-metric-label">to call the result and redirect</div>
+        </div>
+      </div>
+      <p class="case-body">The CEO believed post-consultation NPS would improve if patients could speak with a doctor after their visit. I designed a controlled experiment to test this — and the data killed the assumption. We moved fast, read the results honestly, and redirected investment to the real problem.</p>
+      <button class="toggle-btn" onclick="toggle(&#39;e2&#39;, this)">
+        Read full case
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <div class="case-expand" id="e2">
+        <div class="story-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">The hypothesis (not mine)</div>
+            <div class="step-text">The CEO hypothesized that patient NPS was lower than it could be because patients had unresolved questions for their doctor after the consultation. His proposed solution: offer every post-consultation patient a follow-up call with their doctor or contact center support.</div>
+          </div>
+        </div>
+        <div class="story-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Experiment design — no dev required</div>
+            <div class="step-text">Rather than build and ship, I proposed a lightweight operational test first. We selected ~500 patients post-consultation across multiple clinics, doctors, and specialties. The test group was offered the doctor follow-up or contact center support. We tracked NPS scores and — critically — the reason for contact.</div>
+          </div>
+        </div>
+        <div class="story-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">The result: the assumption was wrong</div>
+            <div class="step-text">After 4 weeks, NPS did not improve consistently across clinics or specialties. Of the ~12% of patients who engaged, only 6% had a medical question for their doctor. The majority had operational issues: insurance problems, lab results not yet delivered, or medications not yet received — none of which were medical follow-up needs.</div>
+          </div>
+        </div>
+        <div class="story-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Decision: kill it, redirect investment</div>
+            <div class="step-text">I presented findings to the CEO with a clear recommendation: do not build the doctor follow-up call feature. Redirect investment to insurance coordination, lab result delivery, and medication fulfillment workflows. The experiment cost zero in development and saved significant engineering time from being spent on the wrong solution.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE 3 -->
+    <div class="case-card">
+      <div class="case-tags">
+        <span class="tag tag-cro">SaaS Activation</span>
+        <span class="tag tag-disc">Discovery</span>
+        <span class="tag tag-neutral">Subscription · B2C</span>
+      </div>
+      <div class="case-title">Prescription calculator redesign — Bluemeds</div>
+      <div class="case-sub">Recurring medicine subscription · Guatemala · Hotjar · User interviews · Usability testing</div>
+      <div class="case-metrics">
+        <div class="case-metric">
+          <div class="case-metric-num">2.1×</div>
+          <div class="case-metric-label">quotes generated per visitor</div>
+        </div>
+        <div class="case-metric">
+          <div class="case-metric-num">1.5%→3.2%</div>
+          <div class="case-metric-label">visitor-to-quote conversion</div>
+        </div>
+        <div class="case-metric">
+          <div class="case-metric-num">↓ rage</div>
+          <div class="case-metric-label">frustration signals on calculator</div>
+        </div>
+      </div>
+      <p class="case-body">Bluemeds' savings calculator — its core acquisition tool — had high abandonment and visible frustration signals in Hotjar. I ran user interviews, built prototypes, ran usability tests, and shipped a redesign that matched patients' mental model of their medications. Conversion more than doubled.</p>
+      <button class="toggle-btn" onclick="toggle(&#39;e3&#39;, this)">
+        Read full case
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <div class="case-expand" id="e3">
+        <div class="story-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Identifying the problem</div>
+            <div class="step-text">Hotjar recordings on the Bluemeds calculator showed high rage-click rates and purposeless navigation — signs of confusion, not intent. The calculator required inputs for dosage, frequency, medication type, and delivery timing. Visitor-to-quote conversion sat at 1.5%. Most users dropped off without generating a quote.</div>
+          </div>
+        </div>
+        <div class="story-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Discovery — talking to users</div>
+            <div class="step-text">I identified the highest-frustration sessions via Hotjar and GA4, then recruited those users for interviews. Key insight: patients don't think about medications in doses and frequencies — they think "I take this pill daily" and "it should arrive monthly." They also didn't understand the delivery date logic the system was producing, which created distrust.</div>
+          </div>
+        </div>
+        <div class="story-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Prototype &amp; usability test</div>
+            <div class="step-text">I designed prototypes that matched patients' mental model: monthly delivery as the default, smart defaults for common dosages, and a simplified savings comparison (monthly cost, not per-unit math). Ran usability tests with target patients before any development. The redesigned flow let users reach a quote in significantly fewer steps with less cognitive load.</div>
+          </div>
+        </div>
+        <div class="story-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Result</div>
+            <div class="step-text">After shipping, visitor-to-quote conversion went from 1.5% to 3.2% — a 2.1× lift. Rage clicks dropped. The redesigned quote output also became a useful sales tool, shared directly by the sales team with prospective patients. Metrics approximate; NDA-compliant.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="live">
+  <div class="section-label">Live products I've shipped</div>
+  <div class="live-grid">
+    <div class="live-card">
+      <div class="live-title">Hugo App</div>
+      <div class="live-role">IT Project Manager</div>
+      <div class="live-desc">Mobile super app for food ordering and delivery. Central America, Caribbean &amp; Venezuela.</div>
+      <a class="live-link" href="https://play.google.com/store/apps/details?id=com.hugoapp.client" target="_blank" rel="noopener">
+        View on Play Store
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+    </div>
+    <div class="live-card">
+      <div class="live-title">Blue Medical Scheduling</div>
+      <div class="live-role">IT Program &amp; Project Manager</div>
+      <div class="live-desc">Web app for booking medical appointments, presential or virtual. Guatemala &amp; Costa Rica.</div>
+      <a class="live-link" href="https://agendamiento.mibluemedical.com/" target="_blank" rel="noopener">
+        View live
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+    </div>
+    <div class="live-card">
+      <div class="live-title">Bluemeds</div>
+      <div class="live-role">IT Program &amp; Project Manager</div>
+      <div class="live-desc">Recurring prescription medicine delivery subscription. Guatemala.</div>
+      <a class="live-link" href="https://mibluemeds.com/" target="_blank" rel="noopener">
+        View live
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+    </div>
+    <div class="live-card">
+      <div class="live-title">YODA</div>
+      <div class="live-role">IT Manager</div>
+      <div class="live-desc">B2B SaaS platform connecting digital billboard owners with ad agencies. Central America.</div>
+      <a class="live-link" href="https://yodaooh.com/" target="_blank" rel="noopener">
+        View live
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+    </div>
+    <div class="live-card">
+      <div class="live-title">Adopte.org</div>
+      <div class="live-role">IT Manager</div>
+      <div class="live-desc">Platform connecting dog &amp; cat rescuers with adopters. Central America.</div>
+      <a class="live-link" href="https://adopte.org/" target="_blank" rel="noopener">
+        View live
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+    </div>
+    <div class="live-card">
+      <div class="live-title">Vivolife</div>
+      <div class="live-role">IT Program &amp; Project Manager</div>
+      <div class="live-desc">Loyalty membership platform with discounts and promotions. Blue Medical ecosystem. Guatemala.</div>
+      <a class="live-link" href="https://vivo.life/" target="_blank" rel="noopener">
+        View live
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="tools">
+  <div class="section-label">Tools &amp; stack</div>
+  <div class="tools-grid">
+    <div class="tool-chip"><div class="tool-dot"></div>GA4</div>
+    <div class="tool-chip"><div class="tool-dot"></div>Hotjar</div>
+    <div class="tool-chip"><div class="tool-dot"></div>Figma</div>
+    <div class="tool-chip"><div class="tool-dot"></div>SQL</div>
+    <div class="tool-chip"><div class="tool-dot"></div>Optimizely</div>
+    <div class="tool-chip"><div class="tool-dot"></div>Miro</div>
+    <div class="tool-chip"><div class="tool-dot"></div>Linear / Asana</div>
+    <div class="tool-chip"><div class="tool-dot"></div>User interviews</div>
+    <div class="tool-chip"><div class="tool-dot"></div>Usability testing</div>
+    <div class="tool-chip"><div class="tool-dot"></div>Balsamiq</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<footer>
+  <p class="footer-note">Metrics are approximated to protect NDA obligations. All work reflects real products and real results. Additional case studies (product discovery) available on request.</p>
+  <div class="footer-contact">
+    <a href="mailto:josue@example.com">josue@example.com</a>
+  </div>
+</footer>
+
+<script>
+function toggle(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  const svg = btn.querySelector('svg');
+  btn.childNodes[0].textContent = open ? 'Collapse ' : 'Read full case ';
+}
+</script>
+
+
+</body></html>
