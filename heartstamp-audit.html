@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)file:///C:/Users/jcorn/Downloads/heartstamp-audit_7.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HeartStamp Funnel Audit — Josué Cornejo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./heartstamp-audit_files/css2" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5F0;--surface:#FFFFFF;--text:#1A1A1A;--muted:#6B6860;--faint:#9C9A95;
+  --accent:#1A3A2A;--accent-light:#E8F0EB;--accent-mid:#2D5C40;
+  --border:rgba(0,0,0,0.08);--border-mid:rgba(0,0,0,0.14);
+  --danger:#E24B4A;--danger-bg:#FCEBEB;--danger-text:#A32D2D;--danger-border:#F09595;
+  --warn:#EF9F27;--warn-bg:#FAEEDA;--warn-text:#854F0B;--warn-border:#FAC775;
+  --info:#378ADD;--info-bg:#E6F1FB;--info-text:#185FA5;--info-border:#B5D4F4;
+  --success:#639922;--success-bg:#EAF3DE;--success-text:#3B6D11;--success-border:#C0DD97;
+  --psych-bg:#EEEDFE;--psych-text:#3C3489;--psych-border:#AFA9EC;
+  --teal-bg:#E1F5EE;--teal-text:#0F6E56;--teal-border:#5DCAA5;
+  --radius:12px;--radius-sm:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-name{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text);text-decoration:none}
+.nav-back{font-size:13px;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px}
+.nav-back:hover{color:var(--text)}
+
+.hero{max-width:860px;margin:0 auto;padding:3.5rem 2rem 2rem}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent-mid);background:var(--accent-light);padding:5px 14px;border-radius:99px;margin-bottom:1.5rem}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent-mid)}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;margin-bottom:1rem}
+.hero h1 em{font-style:italic;color:var(--accent-mid)}
+.hero-sub{font-size:15px;color:var(--muted);max-width:600px;line-height:1.75;margin-bottom:1.5rem;font-weight:300}
+.meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2rem}
+.meta-tag{font-size:12px;padding:4px 12px;border-radius:99px;border:1px solid var(--border-mid);color:var(--muted)}
+
+/* DISCLAIMER */
+.disclaimer{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:var(--radius-sm);padding:14px 18px;font-size:13px;color:var(--warn-text);line-height:1.6;margin-bottom:2rem}
+
+/* EXECUTIVE SUMMARY */
+.exec-summary{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem 2rem;margin-bottom:1rem}
+.exec-label{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);margin-bottom:1rem}
+.exec-text{font-size:15px;color:var(--muted);line-height:1.8;font-weight:300}
+.exec-text p{margin-bottom:1rem}
+.exec-text p:last-child{margin-bottom:0}
+.exec-highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:1.25rem}
+.exec-highlight{background:var(--bg);border-radius:var(--radius-sm);padding:1rem}
+.exec-highlight-num{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.1;margin-bottom:3px}
+.exec-highlight-label{font-size:11px;color:var(--muted);line-height:1.4}
+
+
+/* ACCORDION */
+.wrap{max-width:860px;margin:0 auto;padding:0 2rem 3rem}
+.accordion{display:flex;flex-direction:column;gap:10px}
+
+.acc-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:box-shadow 0.2s}
+.acc-item:hover{box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+
+
+.acc-trigger{width:100%;display:flex;align-items:center;gap:14px;padding:1.25rem 1.5rem;cursor:pointer;background:none;border:none;text-align:left;font-family:'DM Sans',sans-serif}
+.acc-trigger:hover{background:rgba(0,0,0,0.015)}
+
+.acc-step-badge{font-size:11px;font-weight:500;color:var(--faint);background:var(--bg);padding:3px 10px;border-radius:99px;white-space:nowrap;flex-shrink:0;min-width:200px;text-align:center}
+
+.acc-title{flex:1;font-size:15px;font-weight:500;color:var(--text);line-height:1.3}
+.acc-subtitle{font-size:12px;color:var(--muted);margin-top:2px}
+
+.acc-icon{width:28px;height:28px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.25s;font-size:12px;color:var(--muted)}
+.acc-item.open .acc-icon{transform:rotate(180deg)}
+
+.acc-body{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid var(--border)}
+.acc-item.open .acc-body{display:block}
+
+/* CONTENT INSIDE ACCORDION */
+.step-cro{font-size:12px;color:var(--muted);margin:1.25rem 0 1.5rem;padding:8px 14px;background:var(--bg);border-radius:var(--radius-sm);display:inline-block;line-height:1.6}
+.step-cro strong{color:var(--text)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.block-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.block-label::before{content:'';width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.block-label.working{color:var(--success-text)}.block-label.working::before{background:var(--success)}
+.block-label.friction{color:var(--danger-text)}.block-label.friction::before{background:var(--danger)}
+.block-label.psych{color:var(--psych-text)}.block-label.psych::before{background:#7F77DD}
+.block-label.data{color:var(--teal-text)}.block-label.data::before{background:#1D9E75}
+.block-label.impact{color:var(--accent-mid)}.block-label.impact::before{background:var(--accent-mid)}
+
+.card{background:var(--bg);border-radius:var(--radius-sm);padding:1.125rem 1.25rem;margin-bottom:0}
+.card.working{border-left:3px solid var(--success)}
+.card.friction{border-left:3px solid var(--danger)}
+.card.friction-warn{border-left:3px solid var(--warn)}
+.card.psych{border-left:3px solid #7F77DD}
+.card.data{border-left:3px solid #1D9E75}
+.card.impact{border-left:3px solid var(--accent-mid)}
+
+.items{list-style:none;padding:0}
+.items li{font-size:13px;color:var(--text);line-height:1.65;margin-bottom:8px;padding-left:16px;position:relative}
+.items li:last-child{margin-bottom:0}
+.items li::before{content:'';position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%}
+.items.working li::before{background:var(--success)}
+.items.friction li::before{background:var(--danger)}
+.items.friction-warn li::before{background:var(--warn)}
+.items.psych li::before{background:#7F77DD}
+.items.data li::before{background:#1D9E75}
+
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0.75rem 0}
+.impact-item{background:var(--surface);border-radius:var(--radius-sm);padding:1rem}
+.impact-num{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.1;margin-bottom:4px}
+.impact-label{font-size:11px;color:var(--muted);line-height:1.4}
+.impact-note{font-size:11px;color:var(--faint);margin-top:8px;line-height:1.5;font-style:italic}
+
+.section-gap{margin-top:1.25rem}
+
+/* GALLERY */
+.gallery{margin-top:1.5rem}
+.gallery-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.gallery-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;cursor:pointer;transition:box-shadow 0.15s}
+.gallery-item:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1)}
+.gallery-item img{width:100%;height:130px;object-fit:cover;object-position:top;display:block}
+.gallery-item-label{font-size:11px;color:var(--muted);padding:7px 9px;line-height:1.4}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999;align-items:center;justify-content:center;padding:2rem}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:90vh;border-radius:var(--radius-sm);object-fit:contain}
+.lightbox-close{position:fixed;top:1.5rem;right:1.5rem;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);color:#fff;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+
+/* BACKLOG */
+.backlog{display:flex;flex-direction:column;gap:10px}
+.tier-label{font-size:12px;font-weight:500;color:var(--muted);padding:6px 0 2px}
+.exp{background:var(--bg);border-radius:var(--radius-sm);padding:1.125rem 1.25rem}
+.exp-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.exp-id{font-size:11px;font-family:monospace;color:var(--faint);background:var(--surface);padding:2px 8px;border-radius:4px;flex-shrink:0;margin-top:2px}
+.exp-title{font-size:14px;font-weight:500;color:var(--text);flex:1}
+.badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.badge-danger{background:var(--danger-bg);color:var(--danger-text)}
+.badge-warn{background:var(--warn-bg);color:var(--warn-text)}
+.badge-success{background:var(--success-bg);color:var(--success-text)}
+.badge-psych{background:var(--psych-bg);color:var(--psych-text)}
+.badge-info{background:var(--info-bg);color:var(--info-text)}
+.exp-body{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:10px}
+.exp-tags{display:flex;gap:6px;flex-wrap:wrap}
+
+/* REFS */
+.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
+.ref-card{background:var(--bg);border-radius:var(--radius-sm);padding:1rem 1.125rem}
+.ref-source{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.ref-url{font-size:11px;color:var(--info-text);margin-bottom:5px;font-family:monospace}
+.ref-desc{font-size:12px;color:var(--muted);line-height:1.55}
+
+hr.divider{border:none;border-top:1px solid var(--border);margin:0 0 10px}
+.section-heading{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--text);margin:0.5rem 0 1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border)}
+
+
+.footer-note{text-align:center;padding:2rem;font-size:13px;color:var(--muted)}
+.footer-note a{color:var(--accent-mid);text-decoration:none}
+
+@media(max-width:640px){
+  .two-col{grid-template-columns:1fr}
+  .impact-grid{grid-template-columns:1fr 1fr}
+  .ref-grid{grid-template-columns:1fr}
+  .exec-highlights{grid-template-columns:1fr 1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="file:///C:/Users/jcorn/Downloads/index.html" class="nav-back">← Back to portfolio</a>
+  <a href="file:///C:/Users/jcorn/Downloads/index.html" class="nav-name">Josué Cornejo</a>
+</nav>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="file:///C:/Users/jcorn/Downloads/heartstamp-audit_7.html" alt="">
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Heuristic Funnel Audit · External Evaluation</div>
+  <h1>HeartStamp — <em>full funnel audit</em> &amp; experiment backlog</h1>
+  <p class="hero-sub">An external CRO evaluation of HeartStamp's web and mobile experience across the full purchase journey: landing, activation, checkout, and payment.</p>
+  <div class="meta-row">
+    <span class="meta-tag">June 2026</span>
+    <span class="meta-tag">heartstamp.com</span>
+    <span class="meta-tag">AI greeting cards · DTC · E-commerce</span>
+    <span class="meta-tag">Desktop + Mobile</span>
+    <span class="meta-tag">Baymard · Growth.Design · Fullstory</span>
+  </div>
+
+  <div class="disclaimer">
+    <strong>Methodology note:</strong> This is a heuristic evaluation conducted as an external observer with no access to internal analytics. All friction points are observed through direct product usage and cross-referenced with industry benchmarks. Every hypothesis requires validation before being prioritized in a real experiment backlog.<br><br>
+    What this audit represents is the first layer of what should be a comprehensive optimization program — one that combines: <strong>qualitative user research</strong> (customer interviews, usability testing, expert heuristic evaluations); <strong>quantitative analysis</strong> (GA4 funnel data, Hotjar session recordings and heatmaps, behavioral analytics); <strong>market analysis</strong> (competitive benchmarking, industry research); and <strong>business understanding</strong> (strategic objectives, OKRs, revenue and cost structure, operational dependencies). With those inputs, a properly sourced optimization area map feeds a rigorous experiment backlog — where every hypothesis has an evidence source, a defined metric, and a stated priority rationale. What you see here is that backlog's starting point, not its final form.
+  </div>
+
+  <div class="exec-summary">
+    <div class="exec-label">Executive summary</div>
+    <div class="exec-text">
+      <p>HeartStamp has built something genuinely differentiated — an AI-assisted card creation experience that is emotionally engaging, visually impressive, and well-branded from end to end. The product delivers on its promise: the generated cards are beautiful, the conversational flow is clever, and the brand voice is warm and distinctive. These are hard things to get right, and HeartStamp gets them right.</p>
+      <p>The opportunity lies in removing friction between that strong product and the purchase. Three specific points in the funnel are likely responsible for the majority of conversion loss: a mandatory account wall that appears immediately after the user's most emotionally invested moment, a shipping cost reveal that creates a 50% price shock late in checkout, and the absence of Apple Pay for a US-first audience that skews heavily toward iPhone. Each of these is fixable without rebuilding the product — they are sequencing and surfacing decisions, not feature gaps.</p>
+    </div>
+    <div class="exec-highlights">
+      <div class="exec-highlight">
+        <div class="exec-highlight-num">⚠ Step 3</div>
+        <div class="exec-highlight-label">Account wall — highest severity. Blocks the funnel after peak emotional investment.</div>
+      </div>
+      <div class="exec-highlight">
+        <div class="exec-highlight-num">50%</div>
+        <div class="exec-highlight-label">Price increase perceived by users when shipping is revealed at checkout step 2.</div>
+      </div>
+      <div class="exec-highlight">
+        <div class="exec-highlight-num">8 tests</div>
+        <div class="exec-highlight-label">Prioritized experiments across acquisition, activation, checkout, and retention.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+<h2 class="section-heading">Analysis</h2>
+<div class="accordion" id="analysis-section">
+
+<!-- STEP 1 -->
+<div class="acc-item open" id="acc1">
+  <button class="acc-trigger" onclick="toggle(&#39;acc1&#39;)">
+    <div class="acc-icon">▼</div>
+    <span class="acc-step-badge">Step 1 · TOFU · Landing</span>
+    <div style="flex:1">
+      <div class="acc-title">Landing page — a strong product, a crowded first impression</div>
+      <div class="acc-subtitle">Awareness → Interest &nbsp;·&nbsp; Bounce rate · Scroll depth · CTA click-through rate</div>
+    </div>
+  </button>
+  <div class="acc-body">
+    <div class="step-cro">CRO stage: <strong>Awareness → Interest</strong> &nbsp;·&nbsp; Key metrics: <strong>Bounce rate · Scroll depth · CTA click-through rate · Session-to-chat-start rate</strong></div>
+    <div class="two-col">
+      <div>
+        <div class="block-label working">What's working well</div>
+        <div class="card working">
+          <ul class="items working">
+            <li>The category navigation bar (BDAY, GRADUATION, ANNIVERSARY…) immediately communicates the product's breadth and occasion-driven model — a strong orientation signal for new visitors.</li>
+            <li>The hero copy ("Snap a selfie, try it on your phone or laptop, no artistic skills needed") is clear, benefit-led, and addresses the #1 objection (effort) upfront.</li>
+            <li>The onboarding modal offers two clear paths ("Let Stampy assist you" vs "Browse cards") — structured choice reduces paralysis for users who don't know where to start.</li>
+            <li>Stampy's character and brand voice are distinctive and warm — rare in e-commerce, and well-aligned with the product's emotional positioning.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label friction">Friction points observed</div>
+        <div class="card friction">
+          <ul class="items friction">
+            <li>Three competing elements appear simultaneously on load: cookie banner (bottom), onboarding modal (center), and Stampy chat (partially visible below). The hero — the product's core value proposition — is blocked before the user has seen it.</li>
+            <li>The cookie banner could not be easily dismissed during testing, creating persistent visual noise at the most critical 5-second window.</li>
+            <li>The onboarding modal asks users to choose a path before they've seen the product — a decision without context.</li>
+            <li>Stampy's chat widget looks like a UI decoration rather than the primary conversion entry point. No visual affordance signals it's interactive.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="two-col section-gap">
+      <div>
+        <div class="block-label psych">Psychology principles activated</div>
+        <div class="card psych">
+          <ul class="items psych">
+            <li><strong>Cognitive Load</strong> — Total mental effort required peaks at arrival. Three competing elements maximize it when it should be near zero.</li>
+            <li><strong>Visual Hierarchy</strong> — High-weight elements (red modal, black cookie banner) compete with the primary CTA, breaking the intended eye-tracking path.</li>
+            <li><strong>Signifiers</strong> (Norman) — The Stampy chat has no visual cue that it's interactive. No cursor affordance, no animation, no invitation signal.</li>
+            <li><strong>Uncertainty Effect</strong> — Users who can't immediately understand "what do I do here?" apply a default exit heuristic.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label data">What I'd confirm with internal data</div>
+        <div class="card data">
+          <ul class="items data">
+            <li>Bounce rate on landing (GA4) — what % of sessions end with zero interaction?</li>
+            <li>Hotjar heatmap of the first viewport — where do users click first: modal, chat, or category bar?</li>
+            <li>% of sessions where the modal is closed vs a path is selected</li>
+            <li>Session-to-chat-start rate — how many visitors actually engage with Stampy?</li>
+            <li>Mobile vs desktop bounce rate split</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="gallery">
+      <div class="gallery-label">Screenshots</div>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773787/1-home-page_xlo5jw.png&#39;)">
+          <img src="./heartstamp-audit_files/1-home-page_xlo5jw.png" alt="HeartStamp home page">
+          <div class="gallery-item-label">Home page — triple overlay on load</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773787/2-cookies-banner_ghiw5e.png&#39;)">
+          <img src="./heartstamp-audit_files/2-cookies-banner_ghiw5e.png" alt="Cookie banner">
+          <div class="gallery-item-label">Cookie banner — persistent, blocking hero</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773787/1-mobile-landing_q9ph1t.png&#39;)">
+          <img src="./heartstamp-audit_files/1-mobile-landing_q9ph1t.png" alt="Mobile landing">
+          <div class="gallery-item-label">Mobile — cleaner numbered list entry</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="acc-item" id="acc2">
+  <button class="acc-trigger" onclick="toggle(&#39;acc2&#39;)">
+    <div class="acc-icon">▼</div>
+    <span class="acc-step-badge">Step 2 · MOFU · Stampy chat</span>
+    <div style="flex:1">
+      <div class="acc-title">Stampy chat — a clever concept with invisible affordances</div>
+      <div class="acc-subtitle">Interest → Consideration &nbsp;·&nbsp; Chat completion rate · Drop-off by step · Time-to-create</div>
+    </div>
+  </button>
+  <div class="acc-body">
+    <div class="step-cro">CRO stage: <strong>Interest → Consideration</strong> &nbsp;·&nbsp; Key metrics: <strong>Chat completion rate · Drop-off step in conversation · Time-to-"Create Card" click · Suggested response click rate</strong></div>
+    <div class="two-col">
+      <div>
+        <div class="block-label working">What's working well</div>
+        <div class="card working">
+          <ul class="items working">
+            <li>The conversational flow (occasion → tone → message) is genuinely clever — it reduces the blank canvas problem and guides users to a result without requiring design skills.</li>
+            <li>The "Surprise me" option is a strong UX pattern — it removes decision paralysis for users who feel overwhelmed by choices.</li>
+            <li>The concept summary (Occasion, For, Tone, Front, Inside, Style) shown before card creation sets clear expectations and lets users correct before committing AI credits.</li>
+            <li>Mobile version uses a numbered list (1–5 options) that is more legible and clearly interactive than the desktop pill buttons.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label friction">Friction points observed</div>
+        <div class="card friction">
+          <ul class="items friction">
+            <li>Response options ("Sweet; Sincere", "Surprise me") are styled as pink text pills — they do not visually read as buttons. During testing, these were not immediately recognized as interactive elements.</li>
+            <li>"Concept" cards showing Front + Inside message appear as static text blocks, not selectable items. There is no visible "Use this concept" CTA.</li>
+            <li>No progress indicator anywhere in the flow. The user has no sense of how many steps remain before seeing their card.</li>
+            <li>The "Create Card" button appears at the bottom of the Stampy panel after confirmation — easy to miss if the user hasn't scrolled.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="two-col section-gap">
+      <div>
+        <div class="block-label psych">Psychology principles activated</div>
+        <div class="card psych">
+          <ul class="items psych">
+            <li><strong>Affordance / Signifiers</strong> — Elements must communicate how they're used. A button styled as plain text breaks the user's interaction model and causes hesitation.</li>
+            <li><strong>Goal Gradient Effect</strong> — Motivation increases as users feel closer to their goal. Without a progress indicator, users don't know how close they are to their card, suppressing this effect.</li>
+            <li><strong>Progressive Disclosure</strong> — The chat does this well conceptually, but invisible affordances break the execution.</li>
+            <li><strong>Uncertainty Effect</strong> — "Am I doing this right?" creates hesitation that compounds with each ambiguous step.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label data">What I'd confirm with internal data</div>
+        <div class="card data">
+          <ul class="items data">
+            <li>Drop-off rate at each Stampy question (GA4 event funnel) — which step loses the most users?</li>
+            <li>Click rate on pill options vs manual text input — are users ignoring the suggested responses?</li>
+            <li>Session recordings of users who exit during chat — do they show hover hesitation on pills?</li>
+            <li>Average time from chat start to "Create Card" click — long times may signal confusion</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="gallery">
+      <div class="gallery-label">Screenshots</div>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773787/3-stampy-chat-beginning_oqd8e9.png&#39;)">
+          <img src="./heartstamp-audit_files/3-stampy-chat-beginning_oqd8e9.png" alt="Stampy chat start">
+          <div class="gallery-item-label">Chat start — occasion input</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773787/4-stampy-chat-flow_ehufs2.png&#39;)">
+          <img src="./heartstamp-audit_files/4-stampy-chat-flow_ehufs2.png" alt="Stampy chat flow">
+          <div class="gallery-item-label">Tone selection pills — low affordance</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773788/5-concepts-button_mnu1ep.png&#39;)">
+          <img src="./heartstamp-audit_files/5-concepts-button_mnu1ep.png" alt="Concept cards">
+          <div class="gallery-item-label">Concept cards — no clear selection CTA</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773788/7-stampy-create-card_fuyoow.png&#39;)">
+          <img src="./heartstamp-audit_files/7-stampy-create-card_fuyoow.png" alt="Create card button">
+          <div class="gallery-item-label">Card summary + "Create Card" — bottom of panel</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773787/2-mobile-choosing_mxkfus.png&#39;)">
+          <img src="./heartstamp-audit_files/2-mobile-choosing_mxkfus.png" alt="Mobile options">
+          <div class="gallery-item-label">Mobile — numbered list, more interactive</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="acc-item" id="acc3">
+  <button class="acc-trigger" onclick="toggle(&#39;acc3&#39;)">
+    <div class="acc-icon">▼</div>
+    <span class="acc-step-badge">Step 3 · Critical · Account wall</span>
+    <div style="flex:1">
+      <div class="acc-title">Account wall — the most costly friction point in the funnel</div>
+      <div class="acc-subtitle">Consideration → Intent (blocked) &nbsp;·&nbsp; Drop-off rate · Signup completion · Revenue impact</div>
+    </div>
+  </button>
+  <div class="acc-body">
+    <div class="step-cro">CRO stage: <strong>Consideration → Intent (blocked)</strong> &nbsp;·&nbsp; Key metrics: <strong>Account wall completion rate · Drop-off at signup · Checkout abandonment attributed to forced registration · Email capture rate</strong></div>
+
+    <div class="card friction" style="margin-bottom:1rem">
+      <div class="block-label friction">Friction point — critical severity</div>
+      <ul class="items friction">
+        <li>After completing the full Stampy conversation — investing 2–3 minutes choosing occasion, tone, and message — users hit a mandatory account creation screen before seeing their card design.</li>
+        <li>The screen presents four signup options (Google, Facebook, Apple, email) with zero guest path. There is no "continue without account" option.</li>
+        <li>The value incentive ("Sign up for free and get your first 200 heart credits") arrives after the friction — it reads as a consolation prize rather than a compelling reason to sign up.</li>
+        <li>On mobile, this step requires typing credentials on a virtual keyboard mid-flow — maximum friction at the highest-intent moment in the funnel.</li>
+      </ul>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="block-label psych">Psychology principles activated</div>
+        <div class="card psych">
+          <ul class="items psych">
+            <li><strong>Sunk Cost Fallacy</strong> — Users who invested 2–3 min feel they'll "lose" their card if they exit. This partially mitigates abandonment, but not enough for users under time pressure.</li>
+            <li><strong>Reactance</strong> — Users resist behaviors when they feel forced. "Create an account to see your card" is coercive framing that triggers resistance in privacy-conscious users.</li>
+            <li><strong>Loss Aversion</strong> — The perceived loss of the created design can push some users through, but it creates negative brand association even when successful.</li>
+            <li><strong>Expectation Bias</strong> — Users expect to see their output immediately after completing a creation flow. An interruption here violates a deep UX contract.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label impact">Revenue impact estimate</div>
+        <div class="card impact">
+          <div class="impact-grid">
+            <div class="impact-item">
+              <div class="impact-num">24–26%</div>
+              <div class="impact-label">of checkouts abandoned due to forced account creation (Baymard, 2025)</div>
+            </div>
+            <div class="impact-item">
+              <div class="impact-num">~$285K</div>
+              <div class="impact-label">estimated annual recoverable revenue at 1,000 daily sessions, $10.49 AOV, 30% recovery</div>
+            </div>
+            <div class="impact-item">
+              <div class="impact-num">Zero dev</div>
+              <div class="impact-label">guest checkout requires no new features — only deferred account creation logic</div>
+            </div>
+          </div>
+          <div class="impact-note">All estimates are illustrative. Actual upside requires real session volume and drop-off rate from GA4.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-gap">
+      <div class="block-label data">What I'd confirm with internal data first</div>
+      <div class="card data">
+        <div class="two-col" style="margin-bottom:0">
+          <ul class="items data">
+            <li>Exact drop-off rate at the account creation screen (GA4 funnel step)</li>
+            <li>% of users who start signup but don't complete it</li>
+            <li>Mobile vs desktop split in this drop-off</li>
+          </ul>
+          <ul class="items data">
+            <li>Which signup method (Google/Apple/email) is most used</li>
+            <li>Average time on screen before abandonment (Hotjar)</li>
+            <li>Session recordings: where exactly do users exit?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery">
+      <div class="gallery-label">Screenshots</div>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773788/8-create-account_ebloh9.png&#39;)">
+          <img src="./heartstamp-audit_files/8-create-account_ebloh9.png" alt="Account wall">
+          <div class="gallery-item-label">Mandatory account creation — no guest path</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="acc-item" id="acc4">
+  <button class="acc-trigger" onclick="toggle(&#39;acc4&#39;)">
+    <div class="acc-icon">▼</div>
+    <span class="acc-step-badge">Step 4 · Activation · Card editor</span>
+    <div style="flex:1">
+      <div class="acc-title">Card editor — a beautiful result that deserves a bigger stage</div>
+      <div class="acc-subtitle">Intent → Desire &nbsp;·&nbsp; Prepare for Cart rate · Preview click rate · Time in editor</div>
+    </div>
+  </button>
+  <div class="acc-body">
+    <div class="step-cro">CRO stage: <strong>Intent → Desire</strong> &nbsp;·&nbsp; Key metrics: <strong>"Prepare for Cart" click rate · Preview click rate · Time in editor · Edit rate vs direct checkout</strong></div>
+    <div class="two-col">
+      <div>
+        <div class="block-label working">What's working well</div>
+        <div class="card working">
+          <ul class="items working">
+            <li>The generated card quality is genuinely impressive — the AI output is the product's strongest selling point and it delivers.</li>
+            <li>Front / Inside / Back thumbnail tabs let users review the full card before purchasing — reducing buyer anxiety about the physical product.</li>
+            <li>The "Preview" mode (fullscreen, clean) is excellent when found — it shows the card as it would actually feel to receive.</li>
+            <li>Improvement suggestion checkboxes provide an easy path to iteration without requiring users to know what to ask for.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label friction">Friction points observed</div>
+        <div class="card friction-warn">
+          <ul class="items friction-warn">
+            <li>During generation, a blank white canvas with a "Loading / Cancel" button creates a dead wait — no progress animation, no sense of what's being created.</li>
+            <li>After generation, the card appears at ~54% zoom in a busy editor UI — not an inspiring first impression of a genuinely beautiful result.</li>
+            <li>The "Preview" button is low-prominence. During testing the chat panel was accidentally hidden with no obvious way to recover it.</li>
+            <li>Four improvement suggestions appear as checkboxes simultaneously — choice overload at the moment users should feel "I love this, let me buy it."</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="two-col section-gap">
+      <div>
+        <div class="block-label psych">Psychology principles activated</div>
+        <div class="card psych">
+          <ul class="items psych">
+            <li><strong>Peak-End Rule</strong> — People judge experiences by their emotional peak. The card reveal IS that peak. Showing it small and surrounded by UI chrome mutes the impact that should drive purchase intent.</li>
+            <li><strong>Aesthetic-Usability Effect</strong> — Beautiful designs are perceived as easier to use. A full-bleed preview maximizes this; a 54% editor view does not.</li>
+            <li><strong>IKEA Effect</strong> — Users value things more when they partially created them. The editor leverages this correctly — but the underwhelming reveal undercuts the payoff.</li>
+            <li><strong>Choice Overload</strong> — Four simultaneous suggestions introduce decision fatigue exactly when users should feel confident and ready to buy.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label data">What I'd confirm with internal data</div>
+        <div class="card data">
+          <ul class="items data">
+            <li>Click rate on "Preview" vs "Prepare for Cart" directly</li>
+            <li>% of users who make edits vs proceed directly to checkout</li>
+            <li>Time on editor page — are users engaged or just clicking through?</li>
+            <li>Click rate on improvement suggestion checkboxes</li>
+            <li>Hotjar scroll behavior: do users scroll to see suggestions?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="gallery">
+      <div class="gallery-label">Screenshots</div>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773788/9-card-creation-wait_kx3q1w.png&#39;)">
+          <img src="./heartstamp-audit_files/9-card-creation-wait_kx3q1w.png" alt="Loading state">
+          <div class="gallery-item-label">Generation loading — blank canvas</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773788/10-card-created_fqvqgq.png&#39;)">
+          <img src="./heartstamp-audit_files/10-card-created_fqvqgq.png" alt="Card created">
+          <div class="gallery-item-label">Card result — beautiful output, small stage</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773787/3-mobile-card-creation_yffbh5.png&#39;)">
+          <img src="./heartstamp-audit_files/3-mobile-card-creation_yffbh5.png" alt="Mobile editor">
+          <div class="gallery-item-label">Mobile editor — toolbar takes screen space</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773787/4-mobile-card-preview_ku46mr.png&#39;)">
+          <img src="./heartstamp-audit_files/4-mobile-card-preview_ku46mr.png" alt="Mobile preview">
+          <div class="gallery-item-label">Mobile preview — excellent when found</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="acc-item" id="acc5">
+  <button class="acc-trigger" onclick="toggle(&#39;acc5&#39;)">
+    <div class="acc-icon">▼</div>
+    <span class="acc-step-badge">Step 5 · BOFU · Checkout</span>
+    <div style="flex:1">
+      <div class="acc-title">Checkout — a 50% price increase the user didn't see coming</div>
+      <div class="acc-subtitle">Purchase &nbsp;·&nbsp; Checkout completion rate · Drop-off by step · Cart abandonment rate</div>
+    </div>
+  </button>
+  <div class="acc-body">
+    <div class="step-cro">CRO stage: <strong>Purchase</strong> &nbsp;·&nbsp; Key metrics: <strong>Checkout completion rate · Drop-off by step (Address → Shipping → Payment) · Cart abandonment rate · AOV · Mobile form completion rate</strong></div>
+    <div class="two-col">
+      <div>
+        <div class="block-label working">What's working well</div>
+        <div class="card working">
+          <ul class="items working">
+            <li>3-step progress bar (Address → Shipping → Payment) sets clear expectations for checkout length — a best practice that reduces anxiety.</li>
+            <li>Order summary is persistent on the right throughout checkout — users always see what they're buying.</li>
+            <li>The "Back to editor" link lets users refine their card without losing progress — a thoughtful trust signal.</li>
+            <li>Delivery date is shown per shipping option (e.g., "Arrives Wed 6/17") — specific dates outperform vague "3–5 business days" language.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label friction">Friction points observed</div>
+        <div class="card friction">
+          <ul class="items friction">
+            <li>Shipping cost ($3.50) is not revealed until Step 2. The order summary on Step 1 shows Total: $6.99. On Step 2 it jumps to $10.49 — a perceived 50% price increase on the user's mental anchor.</li>
+            <li>The "Ship to" dropdown defaults to "Enter manually" — no autofill. On mobile, 6 address fields via virtual keyboard is significant friction at a critical moment.</li>
+            <li>The cheapest option is labeled "Untracked" — for a sentimental physical product, this creates delivery anxiety that may push users toward upgrading or abandoning.</li>
+            <li>No estimated delivery date is shown on the Address step — users with time-sensitive occasions have no confidence signal at this point.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="two-col section-gap">
+      <div>
+        <div class="block-label psych">Psychology principles activated</div>
+        <div class="card psych">
+          <ul class="items psych">
+            <li><strong>Anchoring</strong> — The user's price reference is anchored at $6.99. The $10.49 reveal creates a disproportionately negative reaction relative to the $3.50 absolute difference.</li>
+            <li><strong>Pain of Paying</strong> — Concentrated fee revelation at the final decision point makes the pain of payment more acute than if costs were shown earlier.</li>
+            <li><strong>Loss Aversion</strong> — Unexpected costs feel like losing money, not spending it. The late reveal triggers this more sharply than transparent upfront pricing would.</li>
+            <li><strong>Trust Erosion</strong> — "Untracked" shipping for a sentimental card conflicts with the product's emotional positioning and introduces doubt late in the funnel.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label data">What I'd confirm with internal data</div>
+        <div class="card data">
+          <ul class="items data">
+            <li>Drop-off rate between Address and Shipping steps (GA4) — this is where the price reveal hits</li>
+            <li>Shipping option distribution — % choosing Economy vs upgrading vs abandoning</li>
+            <li>Mobile vs desktop abandonment rate specifically at the shipping step</li>
+            <li>Hotjar scrollmap on address form — where on mobile do users drop off?</li>
+            <li>Time on Shipping step — long dwell may indicate price shock hesitation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="gallery">
+      <div class="gallery-label">Screenshots</div>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773789/11-order-prepare_nbegcq.png&#39;)">
+          <img src="./heartstamp-audit_files/11-order-prepare_nbegcq.png" alt="Order prepare">
+          <div class="gallery-item-label">Order prepare — total shown as $6.99</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773789/12-checkout-address_gotitb.png&#39;)">
+          <img src="./heartstamp-audit_files/12-checkout-address_gotitb.png" alt="Checkout address">
+          <div class="gallery-item-label">Address step — 6 fields, manual entry default</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773789/13-checkout-shipping_c69jca.png&#39;)">
+          <img src="./heartstamp-audit_files/13-checkout-shipping_c69jca.png" alt="Shipping step">
+          <div class="gallery-item-label">Shipping — total jumps to $10.49, "Untracked" label</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 6 -->
+<div class="acc-item" id="acc6">
+  <button class="acc-trigger" onclick="toggle(&#39;acc6&#39;)">
+    <div class="acc-icon">▼</div>
+    <span class="acc-step-badge">Step 6 · BOFU · Payment</span>
+    <div style="flex:1">
+      <div class="acc-title">Payment — Apple Pay missing for a US-first, iPhone-heavy audience</div>
+      <div class="acc-subtitle">Purchase completion &nbsp;·&nbsp; Payment completion rate · Method distribution · Mobile conversion</div>
+    </div>
+  </button>
+  <div class="acc-body">
+    <div class="step-cro">CRO stage: <strong>Purchase completion</strong> &nbsp;·&nbsp; Key metrics: <strong>Payment completion rate · Payment method distribution · Mobile payment conversion rate · AOV with upsell</strong></div>
+    <div class="two-col">
+      <div>
+        <div class="block-label working">What's working well</div>
+        <div class="card working">
+          <ul class="items working">
+            <li>Google Pay is present — fast one-tap checkout for Android users with no manual entry required.</li>
+            <li>Link (Stripe) auto-populates saved card information — frictionless for returning users who've checked out anywhere with Stripe before.</li>
+            <li>Amazon Pay provides an additional trust signal for users comfortable with Amazon's checkout experience.</li>
+            <li>The "Supercard" upsell (+$3 for 5× Heart Credits) is a well-framed AOV experiment with clear value and well-applied loss aversion copy.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label friction">Friction points observed</div>
+        <div class="card friction">
+          <ul class="items friction">
+            <li>Apple Pay is absent. For a US-first product targeting millennial moms and Gen-Z — both demographics with very high iPhone usage — this is a significant gap at the final conversion step.</li>
+            <li>Apple Pay holds ~49–57% of the US mobile wallet market and ~65.6M active US users in 2025. It accounts for 54% of all in-store mobile wallet taps and over 14% of online consumer payments.</li>
+            <li>For HeartStamp's core audience, the absence of Apple Pay means highest-intent users on the highest-converting device face the highest-friction alternative: manual card entry.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="two-col section-gap">
+      <div>
+        <div class="block-label psych">Psychology principles activated</div>
+        <div class="card psych">
+          <ul class="items psych">
+            <li><strong>Familiarity Bias</strong> — Users prefer familiar payment methods. iPhone users with Apple Pay expect to see it and experience friction — consciously or not — when it's absent.</li>
+            <li><strong>Effort Heuristic</strong> — One-tap native payment removes virtually all remaining checkout friction. Manual card entry is the highest-effort alternative at the lowest-patience moment.</li>
+            <li><strong>Decoy Effect</strong> — The Supercard upsell (+$3) is well-positioned as a clear value add relative to the base card price.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="block-label data">What I'd confirm with internal data</div>
+        <div class="card data">
+          <ul class="items data">
+            <li>Device type breakdown of users reaching checkout — what % are on iOS? If &gt;40%, Apple Pay becomes Tier 1.</li>
+            <li>Mobile vs desktop payment completion rate split (GA4)</li>
+            <li>Payment method distribution — how many attempt manual card entry and abandon?</li>
+            <li>Supercard upsell acceptance rate — helping AOV or creating hesitation?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="gallery">
+      <div class="gallery-label">Screenshots</div>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(&#39;https://res.cloudinary.com/dezggsyyg/image/upload/v1780773789/14-checkout-payment_vdgcue.png&#39;)">
+          <img src="./heartstamp-audit_files/14-checkout-payment_vdgcue.png" alt="Payment screen">
+          <div class="gallery-item-label">Payment — Google Pay, Link, Amazon Pay. Apple Pay absent.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<h2 class="section-heading">Experiments</h2>
+<div class="accordion" id="experiments-section">
+<div class="acc-item" id="acc7">
+  <button class="acc-trigger" onclick="toggle(&#39;acc7&#39;)">
+    <div class="acc-icon">▼</div>
+    <span class="acc-step-badge">Experiment backlog</span>
+    <div style="flex:1">
+      <div class="acc-title">8 prioritized experiments across acquisition, activation, checkout &amp; retention</div>
+      <div class="acc-subtitle">Tier 1 · Tier 2 · Tier 3 — ordered by estimated impact</div>
+    </div>
+  </button>
+  <div class="acc-body">
+    <div class="backlog" style="margin-top:1rem">
+
+      <div class="tier-label">🔴 Tier 1 — Ship in week 1</div>
+
+      <div class="exp">
+        <div class="exp-top">
+          <span class="exp-id">EXP-001</span>
+          <span class="exp-title">Deferred account creation — guest path to checkout</span>
+          <span class="badge badge-danger">Critical</span>
+        </div>
+        <div class="exp-body"><strong>Hypothesis:</strong> if users can see their card and reach checkout without creating an account, checkout completion rate will increase by ≥10% — removing the #1 conversion killer (Baymard: 24–26% of abandonments) amplified by the emotional sunk cost of having created the design.<br><br><strong>Variant:</strong> move account creation to post-purchase. Offer "Save your card + 200 credits" after the order is placed.<br><br><strong>Data needed before launch:</strong> current drop-off rate at account creation screen (GA4).</div>
+        <div class="exp-tags">
+          <span class="badge badge-danger">Checkout completion rate</span>
+          <span class="badge badge-psych">Reactance · Sunk Cost · Loss Aversion</span>
+          <span class="badge badge-info">BOFU</span>
+        </div>
+      </div>
+
+      <div class="exp">
+        <div class="exp-top">
+          <span class="exp-id">EXP-002</span>
+          <span class="exp-title">Shipping cost visibility before checkout</span>
+          <span class="badge badge-danger">Critical</span>
+        </div>
+        <div class="exp-body"><strong>Hypothesis:</strong> showing "Ships from $3.50" on the "Prepare your order" page will reduce drop-off between Address and Shipping steps by setting correct price expectations before the user commits to the flow.<br><br><strong>Data needed:</strong> current drop-off rate between Address and Shipping steps. Baymard: 48% of cart abandonments caused by unexpected costs.</div>
+        <div class="exp-tags">
+          <span class="badge badge-danger">Address→Shipping drop-off</span>
+          <span class="badge badge-psych">Anchoring · Pain of Paying · Expectation Bias</span>
+          <span class="badge badge-info">BOFU · Checkout</span>
+        </div>
+      </div>
+
+      <div class="exp">
+        <div class="exp-top">
+          <span class="exp-id">EXP-003</span>
+          <span class="exp-title">Auto-preview after card generation</span>
+          <span class="badge badge-warn">High</span>
+        </div>
+        <div class="exp-body"><strong>Hypothesis:</strong> showing the card in fullscreen preview immediately after generation will increase "Prepare for Cart" click rate by maximizing the emotional peak of the card reveal.<br><br><strong>Variant:</strong> after generation, auto-open Preview modal with single CTA: "Love it? Prepare for Cart" and a secondary "Edit" link.</div>
+        <div class="exp-tags">
+          <span class="badge badge-warn">Prepare for Cart click rate</span>
+          <span class="badge badge-psych">Peak-End Rule · Aesthetic-Usability · IKEA Effect</span>
+          <span class="badge badge-info">MOFU · Activation</span>
+        </div>
+      </div>
+
+      <div class="tier-label">🟡 Tier 2 — Weeks 2–3</div>
+
+      <div class="exp">
+        <div class="exp-top">
+          <span class="exp-id">EXP-004</span>
+          <span class="exp-title">Apple Pay integration</span>
+          <span class="badge badge-warn">High</span>
+        </div>
+        <div class="exp-body"><strong>Hypothesis:</strong> adding Apple Pay will increase mobile checkout completion rate, particularly among iOS users (~49–57% of US mobile wallet market share, 65.6M active US users in 2025).<br><br><strong>Note:</strong> if iOS device share among checkout sessions is &gt;40%, promote to Tier 1.</div>
+        <div class="exp-tags">
+          <span class="badge badge-warn">Mobile checkout completion rate</span>
+          <span class="badge badge-psych">Familiarity Bias · Effort Heuristic</span>
+          <span class="badge badge-info">BOFU · Mobile</span>
+        </div>
+      </div>
+
+      <div class="exp">
+        <div class="exp-top">
+          <span class="exp-id">EXP-005</span>
+          <span class="exp-title">Button affordance in Stampy chat options</span>
+          <span class="badge badge-warn">Medium</span>
+        </div>
+        <div class="exp-body"><strong>Hypothesis:</strong> redesigning chat response options as visually explicit buttons will increase suggested response click rate and reduce mid-conversation drop-off.<br><br><strong>Variant:</strong> pills with solid border + fill background vs current text-only pink pills.</div>
+        <div class="exp-tags">
+          <span class="badge badge-warn">Chat completion rate</span>
+          <span class="badge badge-psych">Affordance · Signifiers · Cognitive Load</span>
+          <span class="badge badge-info">MOFU · Activation</span>
+        </div>
+      </div>
+
+      <div class="exp">
+        <div class="exp-top">
+          <span class="exp-id">EXP-006</span>
+          <span class="exp-title">Delivery date urgency on landing page</span>
+          <span class="badge badge-warn">Medium</span>
+        </div>
+        <div class="exp-body"><strong>Hypothesis:</strong> "Order by Thursday — arrives before Father's Day" messaging on the landing page will increase conversion during occasion-driven demand periods by creating authentic, relevant urgency.</div>
+        <div class="exp-tags">
+          <span class="badge badge-warn">Landing → checkout conversion rate</span>
+          <span class="badge badge-psych">Scarcity · Loss Aversion · Temporal Discounting</span>
+          <span class="badge badge-info">TOFU · Acquisition</span>
+        </div>
+      </div>
+
+      <div class="tier-label">🟢 Tier 3 — Month 1–2</div>
+
+      <div class="exp">
+        <div class="exp-top">
+          <span class="exp-id">EXP-007</span>
+          <span class="exp-title">Occasion reminder opt-in at post-purchase</span>
+          <span class="badge badge-success">Retention</span>
+        </div>
+        <div class="exp-body"><strong>Hypothesis:</strong> offering users the ability to save important dates immediately after purchase will increase 90-day repeat purchase rate by creating recurring triggers for HeartStamp's core use case.</div>
+        <div class="exp-tags">
+          <span class="badge badge-success">90-day repeat purchase rate</span>
+          <span class="badge badge-psych">Commitment &amp; Consistency · Triggers · Zeigarnik Effect</span>
+          <span class="badge badge-info">Post-purchase · Retention</span>
+        </div>
+      </div>
+
+      <div class="exp">
+        <div class="exp-top">
+          <span class="exp-id">EXP-008</span>
+          <span class="exp-title">Recipient referral via physical card insert</span>
+          <span class="badge badge-success">Acquisition</span>
+        </div>
+        <div class="exp-body"><strong>Hypothesis:</strong> a QR code in the card envelope directed at the recipient will generate new user acquisition with very high purchase intent — the recipient just experienced the product's emotional value firsthand.</div>
+        <div class="exp-tags">
+          <span class="badge badge-success">Referred new user acquisition rate</span>
+          <span class="badge badge-psych">Reciprocity · Social Proof · Mere Exposure Effect</span>
+          <span class="badge badge-info">Post-purchase · Referral</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+<h2 class="section-heading">Sources</h2>
+<div class="accordion" id="sources-section">
+<div class="acc-item" id="acc8">
+  <button class="acc-trigger" onclick="toggle(&#39;acc8&#39;)">
+    <div class="acc-icon">▼</div>
+    <span class="acc-step-badge">References</span>
+    <div style="flex:1">
+      <div class="acc-title">Sources &amp; further reading</div>
+      <div class="acc-subtitle">Baymard · Growth.Design · Fullstory · Capital One Shopping · Foursixty</div>
+    </div>
+  </button>
+  <div class="acc-body">
+    <div class="ref-grid">
+      <div class="ref-card">
+        <div class="ref-source">Baymard Institute</div>
+        <div class="ref-url">baymard.com</div>
+        <div class="ref-desc">Primary source for checkout UX benchmarks. 70.19% cart abandonment from 49-study aggregate. Account creation = 24–26% of abandonments. Checkout UX Best Practices updated November 2025.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-source">Growth.Design — 106 Cognitive Biases</div>
+        <div class="ref-url">growth.design/psychology</div>
+        <div class="ref-desc">Applied reference for cognitive biases in product design. Covers all 4 decision cycles: information, meaning, time, memory. Source for all psychological principle citations in this audit.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-source">Fullstory 2025 Checkout Friction Report</div>
+        <div class="ref-url">fullstory.com/blog/checkout-friction</div>
+        <div class="ref-desc">Analysis of 9B+ real user sessions in 2025. Behavioral data (not surveys). Confirms account wall, hidden costs, and mobile friction as top conversion killers.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-source">Capital One Shopping / Insider Intelligence</div>
+        <div class="ref-url">capitaloneshopping.com/research/apple-pay-statistics</div>
+        <div class="ref-desc">Apple Pay ~65.6M active US users, ~49–57% US mobile wallet market share, 54% of in-store mobile wallet taps, 14%+ of online consumer payments. 2025 data.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-source">Foursixty / Mobiloud DTC Research 2025–26</div>
+        <div class="ref-url">foursixty.com · mobiloud.com</div>
+        <div class="ref-desc">Applied DTC funnel optimization. 70%+ of e-commerce sales on mobile. Hidden costs = #1 abandonment cause. Practitioner sources aligned with Baymard in real DTC contexts.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-source">Hooked (Eyal) · Predictably Irrational (Ariely)</div>
+        <div class="ref-url">nirandfar.com · predictablyirrational.com</div>
+        <div class="ref-desc">Primary sources for habit-forming product design and behavioral economics. Pain of Paying, Anchoring, Loss Aversion, and Commitment principles cited in this audit.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+
+
+<div class="footer-note">
+  <a href="file:///C:/Users/jcorn/Downloads/index.html">← Back to portfolio</a> &nbsp;·&nbsp; <a href="file:///C:/Users/jcorn/Downloads/heartstamp-audit_7.html#top">↑ Top</a>
+</div>
+
+<script>
+function toggle(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('open');
+}
+function openLightbox(src){
+  document.getElementById('lightbox-img').src=src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox()});
+</script>
+
+
+</body></html>
