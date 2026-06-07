@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>NPS Experiment — Blue Medical · Josué Cornejo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5F0;--surface:#FFFFFF;--text:#1A1A1A;--muted:#6B6860;--faint:#9C9A95;
+  --accent:#1A3A2A;--accent-light:#E8F0EB;--accent-mid:#2D5C40;
+  --border:rgba(0,0,0,0.08);--border-mid:rgba(0,0,0,0.14);
+  --danger:#E24B4A;--danger-bg:#FCEBEB;--danger-text:#A32D2D;
+  --warn:#EF9F27;--warn-bg:#FAEEDA;--warn-text:#854F0B;--warn-border:#FAC775;
+  --info:#378ADD;--info-bg:#E6F1FB;--info-text:#185FA5;
+  --success:#639922;--success-bg:#EAF3DE;--success-text:#3B6D11;
+  --psych-bg:#EEEDFE;--psych-text:#3C3489;
+  --teal-bg:#E1F5EE;--teal-text:#0F6E56;
+  --radius:12px;--radius-sm:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-name{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text);text-decoration:none}
+.nav-back{font-size:13px;color:var(--muted);text-decoration:none}
+.nav-back:hover{color:var(--text)}
+.hero{max-width:860px;margin:0 auto;padding:3.5rem 2rem 2rem}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent-mid);background:var(--accent-light);padding:5px 14px;border-radius:99px;margin-bottom:1.5rem}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent-mid)}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;margin-bottom:1rem}
+h1 em{font-style:italic;color:var(--accent-mid)}
+.hero-sub{font-size:15px;color:var(--muted);max-width:600px;line-height:1.75;margin-bottom:1.5rem;font-weight:300}
+.meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2rem}
+.meta-tag{font-size:12px;padding:4px 12px;border-radius:99px;border:1px solid var(--border-mid);color:var(--muted)}
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2rem}
+.impact-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.impact-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--text);line-height:1.1;margin-bottom:4px}
+.impact-label{font-size:12px;color:var(--muted);line-height:1.5}
+.disclaimer{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:var(--radius-sm);padding:14px 18px;font-size:13px;color:var(--warn-text);line-height:1.6;margin-bottom:2rem}
+.wrap{max-width:860px;margin:0 auto;padding:0 2rem 3rem}
+.section-heading{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--text);margin:2rem 0 1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border)}
+.accordion{display:flex;flex-direction:column;gap:10px;margin-bottom:1rem}
+.acc-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.acc-trigger{width:100%;display:flex;align-items:center;gap:14px;padding:1.25rem 1.5rem;cursor:pointer;background:none;border:none;text-align:left;font-family:'DM Sans',sans-serif}
+.acc-trigger:hover{background:rgba(0,0,0,0.015)}
+.acc-icon{width:28px;height:28px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.25s;font-size:12px;color:var(--muted);order:-1}
+.acc-item.open .acc-icon{transform:rotate(180deg)}
+.acc-step-badge{font-size:11px;font-weight:500;color:var(--faint);background:var(--bg);padding:3px 10px;border-radius:99px;white-space:nowrap;flex-shrink:0;min-width:180px;text-align:center}
+.acc-title{flex:1;font-size:15px;font-weight:500;color:var(--text);line-height:1.3}
+.acc-subtitle{font-size:12px;color:var(--muted);margin-top:2px}
+.acc-body{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid var(--border)}
+.acc-item.open .acc-body{display:block}
+.step-cro{font-size:12px;color:var(--muted);margin:1.25rem 0 1.5rem;padding:8px 14px;background:var(--bg);border-radius:var(--radius-sm);display:inline-block;line-height:1.6}
+.step-cro strong{color:var(--text)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.block-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.block-label::before{content:'';width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.block-label.context{color:var(--info-text)}.block-label.context::before{background:var(--info)}
+.block-label.friction{color:var(--danger-text)}.block-label.friction::before{background:var(--danger)}
+.block-label.psych{color:var(--psych-text)}.block-label.psych::before{background:#7F77DD}
+.block-label.data{color:var(--teal-text)}.block-label.data::before{background:#1D9E75}
+.block-label.result{color:var(--accent-mid)}.block-label.result::before{background:var(--accent-mid)}
+.block-label.hypo{color:var(--info-text)}.block-label.hypo::before{background:var(--info)}
+.block-label.learn{color:var(--warn-text)}.block-label.learn::before{background:var(--warn)}
+.block-label.working{color:var(--success-text)}.block-label.working::before{background:var(--success)}
+.card{background:var(--bg);border-radius:var(--radius-sm);padding:1.125rem 1.25rem;margin-bottom:1rem}
+.card.context{border-left:3px solid var(--info)}
+.card.friction{border-left:3px solid var(--danger)}
+.card.psych{border-left:3px solid #7F77DD}
+.card.data{border-left:3px solid #1D9E75}
+.card.result{border-left:3px solid var(--accent-mid)}
+.card.hypo{border-left:3px solid var(--info)}
+.card.learn{border-left:3px solid var(--warn)}
+.card.working{border-left:3px solid var(--success)}
+.card.neutral{border-left:3px solid var(--faint)}
+.items{list-style:none;padding:0}
+.items li{font-size:13px;color:var(--text);line-height:1.65;margin-bottom:8px;padding-left:16px;position:relative}
+.items li:last-child{margin-bottom:0}
+.items li::before{content:'';position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%}
+.items.context li::before{background:var(--info)}
+.items.friction li::before{background:var(--danger)}
+.items.psych li::before{background:#7F77DD}
+.items.data li::before{background:#1D9E75}
+.items.result li::before{background:var(--accent-mid)}
+.items.hypo li::before{background:var(--info)}
+.items.learn li::before{background:var(--warn)}
+.items.working li::before{background:var(--success)}
+.items.neutral li::before{background:var(--faint)}
+.psych-pills{margin:0.75rem 0 0.5rem;flex-wrap:wrap;display:flex;gap:4px}
+.psych-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;background:var(--psych-bg);color:var(--psych-text);padding:3px 10px;border-radius:99px}
+.source-inline{font-size:11px;color:var(--faint);font-style:italic;margin-top:6px;display:block}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1rem 0}
+.result-item{background:var(--surface);border-radius:var(--radius-sm);padding:1rem;text-align:center}
+.result-num{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);margin-bottom:4px}
+.result-label{font-size:11px;color:var(--muted);line-height:1.4}
+.timeline{display:flex;flex-direction:column;gap:0}
+.timeline-item{display:flex;gap:16px;padding-bottom:1.25rem;position:relative}
+.timeline-item::before{content:'';position:absolute;left:11px;top:24px;bottom:0;width:1px;background:var(--border)}
+.timeline-item:last-child::before{display:none}
+.timeline-dot{width:24px;height:24px;border-radius:50%;background:var(--accent-light);border:2px solid var(--accent-mid);flex-shrink:0;margin-top:2px}
+.timeline-label{font-size:11px;font-weight:500;color:var(--accent-mid);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
+.timeline-text{font-size:13px;color:var(--muted);line-height:1.65}
+.sources-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
+.source-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.125rem}
+.source-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.source-url{font-size:11px;color:var(--info-text);margin-bottom:5px;font-family:monospace}
+.source-desc{font-size:12px;color:var(--muted);line-height:1.55}
+hr.divider{border:none;border-top:1px solid var(--border);margin:0}
+.footer-note{text-align:center;padding:2rem;font-size:13px;color:var(--muted)}
+.footer-note a{color:var(--accent-mid);text-decoration:none}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}.impact-grid{grid-template-columns:1fr 1fr}.result-grid{grid-template-columns:1fr 1fr}.sources-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/index.html" class="nav-back">← Back to portfolio</a>
+  <a href="/index.html" class="nav-name">Josué Cornejo</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Controlled Experiment · Retention · NPS · Healthcare</div>
+  <h1>Post-consultation NPS experiment — <em>killing an assumption before it became a feature</em></h1>
+  <p class="hero-sub">The CEO hypothesized that patients needed clinical follow-up to improve their post-consultation NPS. I designed a lightweight controlled experiment to test this assumption — at zero development cost. The data revealed the real problem was entirely different. This is the case that best demonstrates what good experimentation looks like.</p>
+  <div class="meta-row">
+    <span class="meta-tag">Blue Medical</span>
+    <span class="meta-tag">Guatemala & Costa Rica</span>
+    <span class="meta-tag">2022–2024</span>
+    <span class="meta-tag">Program Manager</span>
+    <span class="meta-tag">NPS · Contact center data · QC feedback</span>
+  </div>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-num">$0</div>
+      <div class="impact-label">development cost — experiment ran operationally before any build</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">6%</div>
+      <div class="impact-label">of contacts actually needed clinical follow-up — 94% had operational issues</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">4 wks</div>
+      <div class="impact-label">to surface the real problem and redirect investment to the right solution</div>
+    </div>
+  </div>
+  <div class="disclaimer">
+    <strong>Confidentiality note:</strong> Patient counts and engagement rates are approximated to protect NDA obligations. All figures reflect real work on a live product across multiple clinics and specialties.
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- CONTEXT -->
+<div class="section-heading">Context</div>
+<div class="accordion">
+  <div class="acc-item open" id="acc-ctx">
+    <button class="acc-trigger" onclick="toggle('acc-ctx')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Background</span>
+      <div style="flex:1">
+        <div class="acc-title">NPS as a retention and revenue metric — why it mattered</div>
+        <div class="acc-subtitle">Post-consultation satisfaction · Cross-sell dependency · Retention lever</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:1.25rem">At Blue Medical, NPS was more than a satisfaction score — it was a proxy for retention and downstream revenue. A patient who left a consultation dissatisfied was less likely to return, less likely to follow through on lab and prescription recommendations, and more likely to choose a competitor for their next visit. Improving NPS was directly linked to the cross-sell model that drove the company's revenue.</p>
+      <div class="two-col">
+        <div>
+          <div class="block-label context">The business problem</div>
+          <div class="card context">
+            <ul class="items context">
+              <li>Post-consultation NPS scores were below the benchmark the business wanted. <em style="font-size:11px;color:var(--faint)">Industry context: NPS above +50 is considered excellent in healthcare; above +70 is world-class (Zonka Feedback, 2026).</em></li>
+              <li>The CEO had a clear hypothesis about the cause — and was prepared to invest engineering resources in a solution based on that hypothesis.</li>
+              <li>The question was not whether to improve NPS. The question was whether the proposed solution was addressing the right root cause.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label hypo">The CEO's hypothesis</div>
+          <div class="card hypo">
+            <ul class="items hypo">
+              <li>Patients had unresolved clinical questions after their consultation — things they forgot to ask the doctor, or realized they needed to clarify after leaving.</li>
+              <li>Proposed solution: offer every post-consultation patient access to a follow-up call with their doctor or contact center support.</li>
+              <li>The hypothesis felt intuitive — and that's exactly why it needed to be tested before resources were committed.</li>
+            </ul>
+          </div>
+          <div class="psych-pills">
+            <span class="psych-pill">🧠 Confirmation Bias</span>
+            <span class="psych-pill">🧠 Narrative Fallacy</span>
+          </div>
+          <span class="source-inline">Psychology: Confirmation Bias (growth.design) — the tendency to seek evidence that confirms what we already believe. Intuitive hypotheses feel true, which makes them the most dangerous kind to leave untested.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIMENT -->
+<div class="section-heading">The experiment</div>
+<div class="accordion">
+
+  <div class="acc-item" id="acc-design">
+    <button class="acc-trigger" onclick="toggle('acc-design')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Design</span>
+      <div style="flex:1">
+        <div class="acc-title">Lightweight operational test — no development required</div>
+        <div class="acc-subtitle">~500 patients · Multiple clinics · Multiple specialties · 4 weeks</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="step-cro">Experiment type: <strong>Operational (no-code)</strong> &nbsp;·&nbsp; Primary metric: <strong>NPS score post-consultation</strong> &nbsp;·&nbsp; Secondary metric: <strong>Reason for contact</strong></div>
+      <div class="two-col">
+        <div>
+          <div class="block-label data">Experiment design</div>
+          <div class="card data">
+            <ul class="items data">
+              <li>Rather than build and ship the follow-up feature, I recommended running a lightweight operational test first — using existing contact center staff to simulate the experience without any engineering investment.</li>
+              <li>~500 patients were selected post-consultation across multiple clinics, doctors, and specialties — ensuring variance in setting, physician type, and medical specialty to avoid selection bias.</li>
+              <li>The test group was offered the opportunity to speak with their doctor or receive contact center support after their visit.</li>
+              <li><strong>The critical design decision: tracking the reason for contact, not just whether contact was made.</strong> This turned a binary metric into an actionable dataset.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label psych">Why pre-defining the measurement mattered</div>
+          <div class="card psych">
+            <ul class="items psych">
+              <li><strong>Confirmation Bias</strong> (growth.design): without pre-defined metrics and a structured reason-for-contact taxonomy, it would be easy to interpret any result as supporting the original hypothesis. Defining what "success" and "failure" look like before the experiment runs is non-negotiable.</li>
+              <li><strong>Curse of Knowledge</strong> (growth.design): the team assumed patients' post-consultation needs were clinical, because that's the lens of a healthcare organization. Systematically capturing the actual reason for contact revealed what patients actually needed — which was completely different.</li>
+            </ul>
+          </div>
+          <div class="card neutral" style="margin-top:0">
+            <div style="font-size:13px;color:var(--muted);line-height:1.65"><strong style="color:var(--text)">CRO principle:</strong> an experiment without a pre-defined measurement plan produces ambiguous results that can be interpreted to support any conclusion. The reason-for-contact taxonomy was the experiment's most important design element.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item" id="acc-result">
+    <button class="acc-trigger" onclick="toggle('acc-result')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Results</span>
+      <div style="flex:1">
+        <div class="acc-title">The assumption was wrong — and the data revealed the real problem</div>
+        <div class="acc-subtitle">NPS did not improve · 94% of contacts were operational · Root cause identified</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="result-grid">
+        <div class="result-item">
+          <div class="result-num">No lift</div>
+          <div class="result-label">NPS did not improve consistently across clinics or specialties</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">~12%</div>
+          <div class="result-label">of patients engaged with the follow-up offer</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">6% clinical</div>
+          <div class="result-label">only 6% of contacts had a clinical question — 94% had operational issues</div>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:1rem">
+        <div>
+          <div class="block-label learn">What the data actually showed</div>
+          <div class="card learn">
+            <ul class="items learn">
+              <li>NPS did not improve consistently across clinics or specialties — the intervention had no meaningful effect on the metric it was designed to move.</li>
+              <li>Of the ~12% of patients who engaged with the follow-up offer, <strong>only 6% had a clinical question</strong> for their doctor. The remaining 94% had operational issues:</li>
+              <li>The majority had problems with <strong>insurance coordination</strong> — coverage questions, claim processing, authorization delays.</li>
+              <li>A significant portion had issues with <strong>lab results not yet delivered</strong> or communicated.</li>
+              <li>Others were waiting on <strong>medications that hadn't arrived</strong> after the consultation.</li>
+              <li>None of these were clinical follow-up needs. They were operational failures downstream from the consultation itself.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label psych">Psychology — why the scores were low</div>
+          <div class="card psych">
+            <ul class="items psych">
+              <li><strong>Halo Effect</strong> (growth.design): patients' overall NPS score was being dragged down by operational failures that happened after the consultation — insurance issues, missing lab results, late medications. A great clinical experience followed by a broken operational process produces a poor overall NPS. The consultation wasn't the problem — the post-visit infrastructure was.</li>
+              <li><strong>Peak-End Rule</strong> (growth.design): people judge experiences by their emotional peak and how they end. If the consultation went well but the last interaction was a frustrating insurance call, that's what patients remembered when asked to rate their experience.</li>
+            </ul>
+          </div>
+          <span class="source-inline">Research context: NPS in healthcare is driven more by operational smoothness than clinical care quality. Insurance navigation, lab result communication, and medication access are consistently top drivers of patient dissatisfaction (Zonka Feedback, 2026). NPS scores vary significantly by specialty and operational context — emergency settings score 15–20 points lower than elective care.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item" id="acc-decision">
+    <button class="acc-trigger" onclick="toggle('acc-decision')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Decision</span>
+      <div style="flex:1">
+        <div class="acc-title">Kill the feature — redirect investment to the real problem</div>
+        <div class="acc-subtitle">Data-backed recommendation · Engineering time protected · Roadmap redirected</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="two-col">
+        <div>
+          <div class="block-label result">The recommendation</div>
+          <div class="card result">
+            <ul class="items result">
+              <li><strong>Do not build the doctor follow-up call feature.</strong> The data showed it would not move NPS in a meaningful way because it was solving the wrong problem — only 6% of patients actually needed what it offered.</li>
+              <li><strong>Redirect investment to the three operational failures</strong> that were actually causing patient dissatisfaction: insurance coordination workflows, lab result delivery communication, and medication fulfillment status visibility.</li>
+              <li>The experiment cost zero in development and produced a directional insight that protected significant engineering time from being spent on a feature with a ~6% addressable use case.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label working">Why this matters as a case study</div>
+          <div class="card working">
+            <ul class="items working">
+              <li>This experiment cost nothing to run. The insight it produced was more valuable than many experiments that cost significantly more.</li>
+              <li>Presenting a null result honestly to the CEO — with data and a clear alternative recommendation — is a harder conversation than confirming a hypothesis. It requires trust in the process and confidence in the data.</li>
+              <li>This is what good experimentation looks like: <strong>cheap tests that prevent expensive wrong bets.</strong> The goal is not to prove ideas right — it's to find out quickly whether they're wrong before committing resources.</li>
+            </ul>
+          </div>
+          <div class="psych-pills">
+            <span class="psych-pill">🧠 Sunk Cost Fallacy</span>
+            <span class="psych-pill">🧠 Outcome Bias</span>
+          </div>
+          <span class="source-inline">CRO principle: the value of an experiment is not measured by whether the hypothesis was confirmed — it's measured by how much better the next decision is because of what you learned. A well-designed null result is a success (VWO, 2026; growth.design).</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- LEARNINGS -->
+<div class="section-heading">What I learned</div>
+<div class="accordion">
+  <div class="acc-item" id="acc-learn">
+    <button class="acc-trigger" onclick="toggle('acc-learn')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Reflection</span>
+      <div style="flex:1">
+        <div class="acc-title">Three principles this experiment reinforced</div>
+        <div class="acc-subtitle">Experimentation discipline · NPS complexity · Operational vs clinical satisfaction</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-label">1 — Test before you build, always</div>
+            <div class="timeline-text">The most dangerous hypotheses are the ones that feel obviously true. The CEO's hypothesis was intuitive, well-intentioned, and backed by logical reasoning. It was also wrong. A 4-week operational test with no development cost surfaced this — a full feature build would have taken months and delivered no NPS improvement. The principle: the cheaper the test, the faster you learn, and the more hypotheses you can test before committing to solutions.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-label">2 — NPS measures the whole journey, not just one touchpoint</div>
+            <div class="timeline-text">Patient satisfaction is not determined by any single interaction — it's the aggregate of every touchpoint from booking to post-visit follow-up. Optimizing one step without understanding the full journey produces misleading signals. The Halo Effect and Peak-End Rule mean that operational failures at the end of the experience disproportionately determine the overall score. In healthcare, this means post-visit operational processes (insurance, labs, medications) are often bigger NPS drivers than the clinical consultation itself.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-label">3 — The reason for contact is more valuable than whether contact was made</div>
+            <div class="timeline-text">Measuring engagement rate alone would have produced an ambiguous result — "12% of patients engaged" could support either the hypothesis (patients wanted follow-up) or contradict it (88% didn't engage). Tracking the reason transformed the data from ambiguous to actionable. This design decision — adding one data field to the experiment — was the difference between a result you can act on and a result you have to interpret.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="section-heading">Sources</div>
+<div class="sources-grid">
+  <div class="source-card">
+    <div class="source-name">Growth.Design — 106 Cognitive Biases</div>
+    <div class="source-url">growth.design/psychology</div>
+    <div class="source-desc">Principles cited: Confirmation Bias, Halo Effect, Peak-End Rule, Curse of Knowledge, Sunk Cost Fallacy, Outcome Bias. Applied to experiment design, result interpretation, and recommendation framing.</div>
+  </div>
+  <div class="source-card">
+    <div class="source-name">Zonka Feedback — NPS in Healthcare 2026</div>
+    <div class="source-url">zonkafeedback.com/blog/nps-in-healthcare</div>
+    <div class="source-desc">Healthcare NPS benchmarks: +50 excellent, +70 world-class. NPS varies significantly by specialty — emergency settings score 15–20 points lower than elective care. Operational smoothness (insurance, labs, medications) is a primary driver of patient dissatisfaction beyond clinical care quality.</div>
+  </div>
+  <div class="source-card">
+    <div class="source-name">VWO — CRO Statistics 2026</div>
+    <div class="source-url">vwo.com/conversion-rate-optimization/cro-statistics</div>
+    <div class="source-desc">CRO is an end-to-end process — from research to prioritizing ideas and implementing changes. Documenting experiment learnings, including null results, allows teams to track strategy development and avoid repeating ineffective approaches.</div>
+  </div>
+  <div class="source-card">
+    <div class="source-name">Relias — Healthcare NPS: Relational vs Transactional 2025</div>
+    <div class="source-url">relias.com/blog/healthcare-net-promoter-score</div>
+    <div class="source-desc">14% improvement in NPS response rate when surveys are sent within one day of the visit. Patients express higher satisfaction when reporting on specific recent interactions — reinforcing that operational timing and context shape NPS scores significantly.</div>
+  </div>
+</div>
+
+</div>
+
+<hr class="divider">
+<div class="footer-note">
+  <a href="/index.html">← Back to portfolio</a> &nbsp;·&nbsp; <a href="#top">↑ Top</a>
+</div>
+
+<script>
+function toggle(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
