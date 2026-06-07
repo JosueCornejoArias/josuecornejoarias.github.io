@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Bluemeds — Prescription Calculator Redesign · Josué Cornejo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5F0;--surface:#FFFFFF;--text:#1A1A1A;--muted:#6B6860;--faint:#9C9A95;
+  --accent:#1A3A2A;--accent-light:#E8F0EB;--accent-mid:#2D5C40;
+  --border:rgba(0,0,0,0.08);--border-mid:rgba(0,0,0,0.14);
+  --danger:#E24B4A;--danger-bg:#FCEBEB;--danger-text:#A32D2D;
+  --warn:#EF9F27;--warn-bg:#FAEEDA;--warn-text:#854F0B;--warn-border:#FAC775;
+  --info:#378ADD;--info-bg:#E6F1FB;--info-text:#185FA5;
+  --success:#639922;--success-bg:#EAF3DE;--success-text:#3B6D11;
+  --psych-bg:#EEEDFE;--psych-text:#3C3489;
+  --teal-bg:#E1F5EE;--teal-text:#0F6E56;
+  --radius:12px;--radius-sm:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-name{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text);text-decoration:none}
+.nav-back{font-size:13px;color:var(--muted);text-decoration:none}
+.nav-back:hover{color:var(--text)}
+.hero{max-width:860px;margin:0 auto;padding:3.5rem 2rem 2rem}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent-mid);background:var(--accent-light);padding:5px 14px;border-radius:99px;margin-bottom:1.5rem}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent-mid)}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;margin-bottom:1rem}
+h1 em{font-style:italic;color:var(--accent-mid)}
+.hero-sub{font-size:15px;color:var(--muted);max-width:600px;line-height:1.75;margin-bottom:1.5rem;font-weight:300}
+.meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2rem}
+.meta-tag{font-size:12px;padding:4px 12px;border-radius:99px;border:1px solid var(--border-mid);color:var(--muted)}
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2rem}
+.impact-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.impact-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--text);line-height:1.1;margin-bottom:4px}
+.impact-label{font-size:12px;color:var(--muted);line-height:1.5}
+.disclaimer{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:var(--radius-sm);padding:14px 18px;font-size:13px;color:var(--warn-text);line-height:1.6;margin-bottom:2rem}
+.wrap{max-width:860px;margin:0 auto;padding:0 2rem 3rem}
+.section-heading{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--text);margin:2rem 0 1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border)}
+.accordion{display:flex;flex-direction:column;gap:10px;margin-bottom:1rem}
+.acc-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.acc-trigger{width:100%;display:flex;align-items:center;gap:14px;padding:1.25rem 1.5rem;cursor:pointer;background:none;border:none;text-align:left;font-family:'DM Sans',sans-serif}
+.acc-trigger:hover{background:rgba(0,0,0,0.015)}
+.acc-icon{width:28px;height:28px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.25s;font-size:12px;color:var(--muted);order:-1}
+.acc-item.open .acc-icon{transform:rotate(180deg)}
+.acc-step-badge{font-size:11px;font-weight:500;color:var(--faint);background:var(--bg);padding:3px 10px;border-radius:99px;white-space:nowrap;flex-shrink:0;min-width:180px;text-align:center}
+.acc-title{flex:1;font-size:15px;font-weight:500;color:var(--text);line-height:1.3}
+.acc-subtitle{font-size:12px;color:var(--muted);margin-top:2px}
+.acc-body{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid var(--border)}
+.acc-item.open .acc-body{display:block}
+.step-cro{font-size:12px;color:var(--muted);margin:1.25rem 0 1.5rem;padding:8px 14px;background:var(--bg);border-radius:var(--radius-sm);display:inline-block;line-height:1.6}
+.step-cro strong{color:var(--text)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.block-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.block-label::before{content:'';width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.block-label.working{color:var(--success-text)}.block-label.working::before{background:var(--success)}
+.block-label.friction{color:var(--danger-text)}.block-label.friction::before{background:var(--danger)}
+.block-label.psych{color:var(--psych-text)}.block-label.psych::before{background:#7F77DD}
+.block-label.data{color:var(--teal-text)}.block-label.data::before{background:#1D9E75}
+.block-label.result{color:var(--accent-mid)}.block-label.result::before{background:var(--accent-mid)}
+.block-label.hypo{color:var(--info-text)}.block-label.hypo::before{background:var(--info)}
+.block-label.learn{color:var(--warn-text)}.block-label.learn::before{background:var(--warn)}
+.card{background:var(--bg);border-radius:var(--radius-sm);padding:1.125rem 1.25rem;margin-bottom:1rem}
+.card.working{border-left:3px solid var(--success)}
+.card.friction{border-left:3px solid var(--danger)}
+.card.psych{border-left:3px solid #7F77DD}
+.card.data{border-left:3px solid #1D9E75}
+.card.result{border-left:3px solid var(--accent-mid)}
+.card.hypo{border-left:3px solid var(--info)}
+.card.learn{border-left:3px solid var(--warn)}
+.card.neutral{border-left:3px solid var(--faint)}
+.items{list-style:none;padding:0}
+.items li{font-size:13px;color:var(--text);line-height:1.65;margin-bottom:8px;padding-left:16px;position:relative}
+.items li:last-child{margin-bottom:0}
+.items li::before{content:'';position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%}
+.items.working li::before{background:var(--success)}
+.items.friction li::before{background:var(--danger)}
+.items.psych li::before{background:#7F77DD}
+.items.data li::before{background:#1D9E75}
+.items.result li::before{background:var(--accent-mid)}
+.items.hypo li::before{background:var(--info)}
+.items.learn li::before{background:var(--warn)}
+.items.neutral li::before{background:var(--faint)}
+.psych-pills{margin:0.75rem 0 0.5rem;flex-wrap:wrap;display:flex;gap:4px}
+.psych-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;background:var(--psych-bg);color:var(--psych-text);padding:3px 10px;border-radius:99px}
+.source-inline{font-size:11px;color:var(--faint);font-style:italic;margin-top:4px;display:block}
+.funnel-steps{display:flex;flex-direction:column;gap:6px;margin:1rem 0}
+.funnel-step-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.funnel-step-row.friction{border-left:3px solid var(--danger);background:var(--danger-bg)}
+.funnel-step-row.changed{border-left:3px solid var(--success);background:var(--success-bg)}
+.funnel-step-row.working{border-left:3px solid var(--success)}
+.funnel-step-num{font-size:11px;font-weight:500;color:var(--faint);min-width:20px}
+.funnel-step-name{font-size:13px;color:var(--text);flex:1}
+.funnel-step-note{font-size:11px;color:var(--muted);text-align:right;max-width:280px}
+.funnel-arrow{text-align:center;font-size:12px;color:var(--faint);padding:2px 0}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1rem 0}
+.result-item{background:var(--surface);border-radius:var(--radius-sm);padding:1rem;text-align:center}
+.result-num{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);margin-bottom:4px}
+.result-label{font-size:11px;color:var(--muted);line-height:1.4}
+.timeline{display:flex;flex-direction:column;gap:0}
+.timeline-item{display:flex;gap:16px;padding-bottom:1.25rem;position:relative}
+.timeline-item::before{content:'';position:absolute;left:11px;top:24px;bottom:0;width:1px;background:var(--border)}
+.timeline-item:last-child::before{display:none}
+.timeline-dot{width:24px;height:24px;border-radius:50%;background:var(--accent-light);border:2px solid var(--accent-mid);flex-shrink:0;margin-top:2px}
+.timeline-label{font-size:11px;font-weight:500;color:var(--accent-mid);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
+.timeline-text{font-size:13px;color:var(--muted);line-height:1.65}
+.sources-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
+.source-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.125rem}
+.source-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.source-url{font-size:11px;color:var(--info-text);margin-bottom:5px;font-family:monospace}
+.source-desc{font-size:12px;color:var(--muted);line-height:1.55}
+hr.divider{border:none;border-top:1px solid var(--border);margin:0}
+.footer-note{text-align:center;padding:2rem;font-size:13px;color:var(--muted)}
+.footer-note a{color:var(--accent-mid);text-decoration:none}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}.impact-grid{grid-template-columns:1fr 1fr}.result-grid{grid-template-columns:1fr 1fr}.sources-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999;align-items:center;justify-content:center;padding:2rem" onclick="closeLightbox()">
+  <button style="position:fixed;top:1.5rem;right:1.5rem;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);color:#fff;border:none;cursor:pointer;font-size:18px" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="" style="max-width:100%;max-height:90vh;border-radius:8px;object-fit:contain">
+</div>
+
+<nav>
+  <a href="/index.html" class="nav-back">← Back to portfolio</a>
+  <a href="/index.html" class="nav-name">Josué Cornejo</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">SaaS Activation · Subscription CRO · Discovery-Led Redesign</div>
+  <h1>Bluemeds — <em>redesigning the calculator</em> that unlocked subscription growth</h1>
+  <p class="hero-sub">How I identified a core activation failure in Bluemeds' prescription savings calculator, ran user discovery, shipped a redesign matched to patients' mental models, and turned a broken acquisition tool into a driver for both online and clinical sales.</p>
+  <div class="meta-row">
+    <span class="meta-tag">Blue Medical — Bluemeds</span>
+    <span class="meta-tag">Guatemala</span>
+    <span class="meta-tag">March 2022 – May 2024</span>
+    <span class="meta-tag">Program Manager</span>
+    <span class="meta-tag">GA4 · Hotjar · Power BI</span>
+    <a href="https://mibluemeds.com/" target="_blank" rel="noopener" class="meta-tag" style="color:var(--accent-mid);text-decoration:none;border-color:var(--accent-mid)">View live product ↗</a>
+  </div>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-num">2.1×</div>
+      <div class="impact-label">lift in visitor-to-quote conversion (1.5% → 3.2%)</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">↓ rage</div>
+      <div class="impact-label">frustration signals on calculator dropped after redesign</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">+Sales</div>
+      <div class="impact-label">calculator output became a tool for clinical sales team</div>
+    </div>
+  </div>
+  <div class="disclaimer">
+    <strong>Confidentiality note:</strong> Metrics are approximated to protect NDA obligations. Traffic volumes and conversion rates reflect real product data but are presented as ranges. All figures reflect real work on a live product.
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- BUSINESS CONTEXT -->
+<div class="section-heading">Business context</div>
+<div class="accordion">
+  <div class="acc-item open" id="acc-ctx">
+    <button class="acc-trigger" onclick="toggle('acc-ctx')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Why this mattered</span>
+      <div style="flex:1">
+        <div class="acc-title">A subscription product for chronic patients — with a high-complexity activation problem</div>
+        <div class="acc-subtitle">Recurring revenue model · $80+ avg. ticket · Cost structure pressure · Low digital literacy audience</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:1.25rem">Bluemeds is a recurring prescription medication delivery program for chronic patients — offering 20% savings on the medications they need to manage conditions like diabetes, hypertension, and chronic pain. The subscription model was the business's bet on reducing costly in-person sales while building predictable recurring revenue. The <strong>average monthly ticket exceeded $80 USD</strong>, making each activated subscriber significantly more valuable than a one-time purchase.</p>
+      <div class="two-col">
+        <div>
+          <div class="block-label working">The opportunity</div>
+          <div class="card working">
+            <ul class="items working">
+              <li>The proof of concept had been validated through contact center and in-clinic sales — demand existed, patients understood the value when explained in person.</li>
+              <li>Building a self-service digital platform could eliminate sales commissions, reduce operational costs, and scale the program without proportional headcount growth.</li>
+              <li>The 20% savings on medications patients depend on is a genuinely compelling value proposition — the product problem was not the offer, it was communicating and activating it digitally.</li>
+              <li>A working calculator would also empower the clinical sales team — giving doctors and sales reps a shareable, visual savings comparison for patient conversations.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label friction">The structural challenges</div>
+          <div class="card friction">
+            <ul class="items friction">
+              <li><strong>High product complexity:</strong> calculating medication savings requires dosage, frequency, medication type, pack size, and delivery timing inputs — a cognitive overload for patients who simply think "I take this pill every day."</li>
+              <li><strong>Low traffic volume:</strong> initial daily sessions were under 100, growing to 200+ with paid investment — too low for statistically significant A/B testing, requiring qualitative-first discovery.</li>
+              <li><strong>Misaligned acquisition:</strong> paid traffic was not directed at the right audience segment — chronic patients with $80+ monthly medication spend. Generic traffic produced low intent and low conversion.</li>
+              <li><strong>Cost structure pressure:</strong> free delivery + medication costs + commissions meant each subscription needed to be correctly priced and operationally efficient. This created constraints on discounting and simplification.</li>
+            </ul>
+          </div>
+          <span class="source-inline">Industry context: the global average e-commerce conversion rate is 2.5–3% (Statista, 2025). Starting below 1% on a complex subscription product with low-intent traffic is a recoverable gap — but requires fixing both the funnel and the traffic strategy simultaneously.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FUNNEL MAP -->
+<div class="section-heading">Funnel map</div>
+<div class="accordion">
+  <div class="acc-item" id="acc-funnel">
+    <button class="acc-trigger" onclick="toggle('acc-funnel')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Full journey</span>
+      <div style="flex:1">
+        <div class="acc-title">8-step subscription funnel — where users dropped and what we changed</div>
+        <div class="acc-subtitle">TOFU → MOFU → BOFU · GA4 · Hotjar · System event logs</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="step-cro">CRO stages: <strong>Acquisition (TOFU) → Activation (MOFU) → Conversion (BOFU)</strong> &nbsp;·&nbsp; Primary metrics: <strong>Visitor-to-quote rate · Quote-to-subscription rate · Session duration · Rage click rate</strong></div>
+      <div class="funnel-steps">
+        <div class="funnel-step-row">
+          <div class="funnel-step-num">1</div>
+          <div class="funnel-step-name">Land on mibluemeds.com</div>
+          <div class="funnel-step-note">&lt;100 daily sessions initially · 200+ with paid investment</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row friction">
+          <div class="funnel-step-num">2</div>
+          <div class="funnel-step-name">⚠ Search for medications</div>
+          <div class="funnel-step-note">Users unfamiliar with product names or dosage formats</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row friction">
+          <div class="funnel-step-num">3</div>
+          <div class="funnel-step-name">⚠ Build medication list</div>
+          <div class="funnel-step-note">Dosage, frequency, pack size — high cognitive load</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row friction">
+          <div class="funnel-step-num">4</div>
+          <div class="funnel-step-name">⚠ Use the savings calculator</div>
+          <div class="funnel-step-note">Complex inputs · Confusing delivery date logic · Rage clicks</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row changed">
+          <div class="funnel-step-num">4+</div>
+          <div class="funnel-step-name">✓ Redesigned calculator (this case study)</div>
+          <div class="funnel-step-note">Smart defaults · Monthly framing · Simplified savings comparison</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row">
+          <div class="funnel-step-num">5</div>
+          <div class="funnel-step-name">Generate quote</div>
+          <div class="funnel-step-note">Baseline: 1.5% of visitors reached this step</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row">
+          <div class="funnel-step-num">6</div>
+          <div class="funnel-step-name">Create account</div>
+          <div class="funnel-step-note">Required before checkout — additional drop-off point</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row">
+          <div class="funnel-step-num">7</div>
+          <div class="funnel-step-name">Delivery & billing information</div>
+          <div class="funnel-step-note">NIT number required (Guatemala tax ID) — friction for some users</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row working">
+          <div class="funnel-step-num">8</div>
+          <div class="funnel-step-name">Subscribe ✓</div>
+          <div class="funnel-step-note">Recurring monthly delivery activated</div>
+        </div>
+      </div>
+      <div class="card neutral" style="margin-top:1rem">
+        <div style="font-size:13px;color:var(--muted);line-height:1.65"><strong style="color:var(--text)">Strategic pivot note:</strong> As the digital funnel showed the depth of the activation challenge, the business made a rational strategic decision — shift primary acquisition toward in-clinic sales, where doctors could explain the product and handle the complexity in person. The digital platform was repositioned to support that strategy by giving the sales team a shareable, visual calculator output for patient conversations.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THE EXPERIMENT -->
+<div class="section-heading">The experiment — calculator redesign</div>
+<div class="accordion">
+  <div class="acc-item" id="acc-discovery">
+    <button class="acc-trigger" onclick="toggle('acc-discovery')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Step 1 · Problem discovery</span>
+      <div style="flex:1">
+        <div class="acc-title">Identifying the activation failure — data + behavioral signals</div>
+        <div class="acc-subtitle">TOFU → MOFU · Hotjar rage clicks · GA4 funnel · System event logs</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="step-cro">CRO stage: <strong>Activation (MOFU)</strong> &nbsp;·&nbsp; Key signals: <strong>Rage click rate · Session duration · Quote generation rate · Drop-off step analysis</strong></div>
+      <div class="two-col">
+        <div>
+          <div class="block-label friction">What the data showed</div>
+          <div class="card friction">
+            <ul class="items friction">
+              <li><strong>Hotjar rage clicks</strong> on the calculator — a clear behavioral signal of confusion and frustration, not intent to abandon. Users were trying to use the tool but failing.</li>
+              <li><strong>Purposeless navigation patterns</strong> — users moving between fields repeatedly without progressing, indicating they didn't understand what was being asked of them.</li>
+              <li><strong>GA4 funnel:</strong> visitor-to-quote conversion rate sat below 1.5% — far below the 2.5–3% e-commerce average, and catastrophically low for a product where the quote is the activation moment.</li>
+              <li><strong>System event logs</strong> (Power BI): most sessions that started the calculator abandoned it before generating a quote. The completion rate was the primary bottleneck in the entire funnel.</li>
+            </ul>
+          </div>
+          <div class="psych-pills">
+            <span class="psych-pill">🧠 Cognitive Load</span>
+            <span class="psych-pill">🧠 Mental Models</span>
+            <span class="psych-pill">🧠 Uncertainty Effect</span>
+            <span class="psych-pill">🧠 Decision Fatigue</span>
+          </div>
+        </div>
+        <div>
+          <div class="block-label data">Root cause hypothesis</div>
+          <div class="card data">
+            <ul class="items data">
+              <li>The calculator was designed around <strong>pharmaceutical logic</strong> (dosage units, frequency intervals, pack configurations) rather than <strong>patient mental models</strong> (I take one pill a day, I need a monthly supply).</li>
+              <li>The delivery date system produced outputs that patients didn't understand — showing scheduled delivery dates that felt arbitrary and created distrust rather than confidence.</li>
+              <li>There was no clear before/after price comparison that matched how patients thought about their spending — monthly cost vs. per-pill unit economics is not how chronic patients budget their medication.</li>
+            </ul>
+          </div>
+          <span class="source-inline">Research context: cognitive load is one of the top conversion killers in complex product flows. Simplifying checkout to one page improves conversions by 17%; autofill-enabled fields boost form completion by 12% (CRO Statistics 2025, Marketing LTB).</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item" id="acc-interviews">
+    <button class="acc-trigger" onclick="toggle('acc-interviews')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Step 2 · User discovery</span>
+      <div style="flex:1">
+        <div class="acc-title">Talking to frustrated users — interviews that revealed the mental model gap</div>
+        <div class="acc-subtitle">Qualitative research · User interviews · Hotjar-sourced recruitment</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="step-cro">Method: <strong>Customer interviews + usability observation</strong> &nbsp;·&nbsp; Recruitment: <strong>Hotjar high-frustration sessions + GA4 drop-off segments</strong></div>
+      <div class="two-col">
+        <div>
+          <div class="block-label data">How we found the right users</div>
+          <div class="card data">
+            <ul class="items data">
+              <li>Used Hotjar to identify sessions with high rage-click signals on the calculator — these were the users most likely to tell us what was wrong.</li>
+              <li>Used GA4 drop-off segments to identify users who had started the calculator flow but abandoned it before generating a quote.</li>
+              <li>Recruited from this segment for direct user interviews — patients who had tried and failed were more valuable than those who had never tried.</li>
+            </ul>
+          </div>
+          <div class="block-label learn" style="margin-top:1rem">Key insights from interviews</div>
+          <div class="card learn">
+            <ul class="items learn">
+              <li><strong>Patients don't think in doses and frequencies.</strong> They think: "I take one of these every morning." Asking for dosage units and frequency intervals was a foreign language.</li>
+              <li><strong>The delivery date logic created distrust.</strong> The system showed scheduled delivery dates that patients didn't understand how to interpret — some thought it meant they had to wait that long for their first order.</li>
+              <li><strong>The savings comparison didn't match their budget frame.</strong> Showing per-unit price comparisons meant nothing. What mattered was: "How much do I spend per month today, vs. how much would I spend with Bluemeds?"</li>
+              <li><strong>Elderly patients and caregivers were particularly affected.</strong> The primary target — chronic patients managing multiple medications — often had low digital literacy or were being assisted by family members.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label psych">Psychology principles at work</div>
+          <div class="card psych">
+            <ul class="items psych">
+              <li><strong>Mental Models</strong> (growth.design): users have preconceived ideas of how things work. The calculator violated patients' mental model of how they think about their medications — creating confusion instead of clarity.</li>
+              <li><strong>Cognitive Load</strong>: total mental effort required peaked at the calculator — the exact moment we needed users to feel momentum, not friction.</li>
+              <li><strong>Trust Erosion</strong>: the confusing delivery date output created doubt about whether the product would actually work as promised. Trust, once broken in a healthcare context, is hard to recover within the same session.</li>
+              <li><strong>Curse of Knowledge</strong> (growth.design): the team building the calculator understood pharmaceutical terminology. The patients using it did not. This gap was invisible until we talked to users.</li>
+            </ul>
+          </div>
+          <div class="card neutral" style="margin-top:0">
+            <div style="font-size:13px;color:var(--muted);line-height:1.65"><strong style="color:var(--text)">Why qualitative research mattered here:</strong> with under 200 daily sessions, quantitative testing alone could not surface the why behind the drop-off. User interviews were not a supplement to data — they were the primary discovery tool at this traffic volume.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item" id="acc-redesign">
+    <button class="acc-trigger" onclick="toggle('acc-redesign')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Step 3 · Prototype & test</span>
+      <div style="flex:1">
+        <div class="acc-title">Redesigning for the patient's mental model — prototypes, usability tests, and launch</div>
+        <div class="acc-subtitle">Prototype → Usability test → Ship → Measure</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="step-cro">Method: <strong>Prototype → Usability testing with target patients → Development → Pre/post measurement</strong></div>
+      <div class="two-col">
+        <div>
+          <div class="block-label hypo">Design principles for the redesign</div>
+          <div class="card hypo">
+            <ul class="items hypo">
+              <li><strong>Monthly framing as the default.</strong> All savings comparisons shown as monthly cost — matching how chronic patients actually budget their medications, not per-unit pharmaceutical logic.</li>
+              <li><strong>Smart defaults for common dosages.</strong> Pre-populate the most common dosage/frequency combinations for each medication — reducing required inputs from 4–5 fields to a confirmation tap.</li>
+              <li><strong>Simplified delivery logic.</strong> Replace abstract scheduled dates with plain language: "Your medications arrive every month, starting [date]."</li>
+              <li><strong>Clear before/after savings comparison.</strong> Show two numbers side by side: "What you pay today at a pharmacy" vs "What you'd pay with Bluemeds" — making the value proposition immediately obvious without calculation effort.</li>
+            </ul>
+          </div>
+          <div class="psych-pills">
+            <span class="psych-pill">🧠 Progressive Disclosure</span>
+            <span class="psych-pill">🧠 Recognition over Recall</span>
+            <span class="psych-pill">🧠 Default Effect</span>
+            <span class="psych-pill">🧠 Effort Heuristic</span>
+            <span class="psych-pill">🧠 Anchoring</span>
+          </div>
+        </div>
+        <div>
+          <div class="block-label data">Usability testing before development</div>
+          <div class="card data">
+            <ul class="items data">
+              <li>Built prototypes in Balsamiq matching the redesigned mental model — tested with target patients before any development began.</li>
+              <li>Usability tests confirmed users could navigate the redesigned flow to a quote significantly faster and with less hesitation.</li>
+              <li>Specific test tasks: "Find your medication, add it, and see how much you'd save per month." Success rate improved materially vs. the original flow.</li>
+              <li>Tested with elderly users and caregivers specifically — the highest-friction segment in the original discovery.</li>
+            </ul>
+          </div>
+          <div class="block-label psych" style="margin-top:1rem">Psychology in depth</div>
+          <div class="card psych">
+            <ul class="items psych">
+              <li><strong>Default Effect</strong> (growth.design): users are strongly influenced by pre-set defaults. By setting monthly delivery and common dosages as defaults, we removed the need for most users to make any active decisions.</li>
+              <li><strong>Anchoring</strong>: showing the pharmacy price first creates a high anchor. The Bluemeds price then feels significantly lower by comparison — making the value proposition land harder than showing the Bluemeds price alone.</li>
+              <li><strong>Effort Heuristic</strong>: the perceived effort of using the calculator was the primary abandonment driver. Reducing inputs from 4–5 to 1–2 dramatically changed the effort calculus at the top of the tool.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMAGE -->
+      <div style="margin-top:1.5rem">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--faint);margin-bottom:10px">Screenshot — prescription calculator</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;cursor:pointer;max-width:580px" onclick="openLightbox('https://res.cloudinary.com/dezggsyyg/image/upload/v1780866847/Bluecalculator_gohepr.png')">
+          <img src="https://res.cloudinary.com/dezggsyyg/image/upload/v1780866847/Bluecalculator_gohepr.png" alt="Bluemeds prescription calculator" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block">
+          <div style="font-size:11px;color:var(--muted);padding:8px 10px">Bluemeds savings calculator — redesigned with monthly framing, smart defaults, and clear before/after savings comparison</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item" id="acc-result">
+    <button class="acc-trigger" onclick="toggle('acc-result')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Step 4 · Results</span>
+      <div style="flex:1">
+        <div class="acc-title">Results — conversion more than doubled, and an unexpected sales enablement win</div>
+        <div class="acc-subtitle">1.5% → 3.2% visitor-to-quote · 2.1× lift · Rage clicks down · Sales tool created</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="result-grid">
+        <div class="result-item">
+          <div class="result-num">1.5%→3.2%</div>
+          <div class="result-label">visitor-to-quote conversion rate</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">2.1×</div>
+          <div class="result-num" style="font-size:14px;font-family:var(--font-sans);color:var(--muted)">lift in quotes generated per visitor</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">↓</div>
+          <div class="result-label">rage click rate on calculator — frustration signals dropped</div>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:1rem">
+        <div>
+          <div class="block-label result">What changed and why</div>
+          <div class="card result">
+            <ul class="items result">
+              <li>Visitor-to-quote conversion more than doubled — from 1.5% to 3.2%. The redesign matched the patient's mental model, reducing the cognitive effort required to reach a quote.</li>
+              <li>Rage clicks on the calculator dropped — a behavioral signal confirming that frustration at the tool specifically was reduced, not just that fewer people were trying it.</li>
+              <li>Session duration and time on the calculator page increased — a positive signal indicating users were engaging more intentionally rather than bouncing in frustration.</li>
+              <li>Measurement: pre/post via GA4 and Hotjar across comparable time periods. No formal A/B framework — low traffic volume made statistical significance impractical within the program's pace.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label working">Unexpected win — sales enablement</div>
+          <div class="card working">
+            <ul class="items working">
+              <li>The redesigned calculator output — a clear monthly savings comparison — became a tool for the clinical sales team. Doctors and sales reps started sharing the quote output directly with patients during clinic visits.</li>
+              <li>This was unplanned. The insight came from the sales team, who recognized that the simplified, visual savings comparison was exactly what they needed for in-person patient conversations.</li>
+              <li>It turned the digital calculator from a pure self-service acquisition tool into a sales enablement asset — creating value in both the digital and clinical channels simultaneously.</li>
+            </ul>
+          </div>
+          <span class="source-inline">Research context: checkout streamlining alone can produce up to 35% conversion lift (FERMÀT, 2025). Simplifying complex product flows to match user mental models is the highest-leverage intervention in subscription product CRO.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEARNINGS -->
+<div class="section-heading">What I learned & what comes next</div>
+<div class="accordion">
+  <div class="acc-item" id="acc-learn">
+    <button class="acc-trigger" onclick="toggle('acc-learn')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Reflection</span>
+      <div style="flex:1">
+        <div class="acc-title">Key learnings — and what remained on the roadmap</div>
+        <div class="acc-subtitle">What worked · Limitations · What I'd do differently · Next experiments</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="two-col">
+        <div>
+          <div class="block-label learn">What I learned</div>
+          <div class="card learn">
+            <ul class="items learn">
+              <li><strong>Product complexity is a CRO problem, not just a UX problem.</strong> The calculator wasn't broken — it was solving the wrong problem. It was built for pharmaceutical operations logic, not patient mental models. Discovery revealed this; the redesign fixed it.</li>
+              <li><strong>At low traffic volumes, qualitative research is your primary tool.</strong> We couldn't run A/B tests with statistical significance at our session volume. User interviews and Hotjar behavioral analysis were not supplements — they were the method.</li>
+              <li><strong>The traffic problem and the conversion problem are separate.</strong> Even at 3.2% conversion, the absolute number of subscribers was constrained by low traffic. Both needed to be solved — fixing conversion without fixing acquisition only partially solved the business problem.</li>
+              <li><strong>Design for your lowest-fluency user.</strong> Chronic patients, many elderly, with low digital literacy, were the primary target. Every simplification that worked for them also worked for everyone else. Designing up from the hardest case is the right approach.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label data">What I'd do differently</div>
+          <div class="card data">
+            <ul class="items data">
+              <li><strong>Fix the traffic targeting first.</strong> Generic paid traffic to a complex subscription product is a waste. Targeting chronic patient profiles specifically — or partnering with clinic referral flows — would have improved both volume and intent before the calculator was even opened.</li>
+              <li><strong>Build the A/B testing infrastructure earlier.</strong> Even at low volume, having the infrastructure in place allows incremental learning over longer windows. Waiting for volume before building the test framework is the wrong sequence.</li>
+              <li><strong>Involve the clinical sales team from the start.</strong> The discovery that the calculator output was useful in clinical conversations happened by accident. It should have been designed for dual use — digital and in-clinic — from the first prototype.</li>
+            </ul>
+          </div>
+          <div class="block-label result" style="margin-top:1rem">Roadmap at departure</div>
+          <div class="card result">
+            <ul class="items result">
+              <li>Better market price comparison — showing real pharmacy prices for each medication to make the savings comparison credible and verifiable, not just estimated.</li>
+              <li>Product photography and imagery improvements — the platform lacked visual trust signals for unfamiliar medications.</li>
+              <li>Social proof and reviews — critical for a healthcare subscription product where trust is the primary conversion driver.</li>
+              <li>Caregiver flow — designing specifically for family members managing medications for elderly parents, a significant and underserved segment of the target market.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="section-heading">Sources</div>
+<div class="sources-grid">
+  <div class="source-card">
+    <div class="source-name">Growth.Design — 106 Cognitive Biases</div>
+    <div class="source-url">growth.design/psychology</div>
+    <div class="source-desc">Principles cited: Cognitive Load, Mental Models, Curse of Knowledge, Default Effect, Anchoring, Progressive Disclosure, Recognition over Recall, Effort Heuristic, Trust Erosion, Decision Fatigue, Uncertainty Effect.</div>
+  </div>
+  <div class="source-card">
+    <div class="source-name">CRO Statistics 2025 — Marketing LTB</div>
+    <div class="source-url">marketingltb.com/blog/statistics/conversion-rate-optimization-cro-statistics</div>
+    <div class="source-desc">Simplifying checkout improves conversions by 17%. Autofill fields boost form completion by 12%. Average e-commerce cart abandonment: 69.4%. Showing total cost earlier reduces abandonment by 19%.</div>
+  </div>
+  <div class="source-card">
+    <div class="source-name">Ecommerce CRO Guide — Build Grow Scale 2025</div>
+    <div class="source-url">buildgrowscale.com/conversion-rate-optimization-ecommerce-guide-2</div>
+    <div class="source-desc">Checkout streamlining can produce up to 35% conversion lift (FERMÀT, 2025). Global average e-commerce conversion rate: 2.5–3% (Statista, 2025). Simplifying complex product flows to match user mental models is the highest-leverage CRO intervention.</div>
+  </div>
+  <div class="source-card">
+    <div class="source-name">Pharmaceutical CRO — Cardinal Digital Marketing 2025</div>
+    <div class="source-url">cardinaldigitalmarketing.com/healthcare-specialties/pharmaceutical-agency/cro</div>
+    <div class="source-desc">Trust and clarity are the primary conversion levers in pharmaceutical and healthcare e-commerce. Removing unnecessary steps and designing for patient mental models drives the highest conversion improvements in the sector.</div>
+  </div>
+</div>
+
+</div>
+
+<hr class="divider">
+<div class="footer-note">
+  <a href="/index.html">← Back to portfolio</a> &nbsp;·&nbsp; <a href="#top">↑ Top</a>
+</div>
+
+<script>
+function toggle(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('open');
+}
+function openLightbox(src){
+  document.getElementById('lightbox-img').src=src;
+  const lb=document.getElementById('lightbox');
+  lb.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').style.display='none';
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox()});
+</script>
+</body>
+</html>
