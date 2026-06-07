@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Agendamiento 2.0 — Blue Medical · Josué Cornejo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5F0;--surface:#FFFFFF;--text:#1A1A1A;--muted:#6B6860;--faint:#9C9A95;
+  --accent:#1A3A2A;--accent-light:#E8F0EB;--accent-mid:#2D5C40;
+  --border:rgba(0,0,0,0.08);--border-mid:rgba(0,0,0,0.14);
+  --danger:#E24B4A;--danger-bg:#FCEBEB;--danger-text:#A32D2D;
+  --warn:#EF9F27;--warn-bg:#FAEEDA;--warn-text:#854F0B;--warn-border:#FAC775;
+  --info:#378ADD;--info-bg:#E6F1FB;--info-text:#185FA5;
+  --success:#639922;--success-bg:#EAF3DE;--success-text:#3B6D11;
+  --psych-bg:#EEEDFE;--psych-text:#3C3489;
+  --teal-bg:#E1F5EE;--teal-text:#0F6E56;
+  --radius:12px;--radius-sm:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-name{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text);text-decoration:none}
+.nav-back{font-size:13px;color:var(--muted);text-decoration:none}
+.nav-back:hover{color:var(--text)}
+.hero{max-width:860px;margin:0 auto;padding:3.5rem 2rem 2rem}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent-mid);background:var(--accent-light);padding:5px 14px;border-radius:99px;margin-bottom:1.5rem}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent-mid)}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;margin-bottom:1rem}
+h1 em{font-style:italic;color:var(--accent-mid)}
+.hero-sub{font-size:15px;color:var(--muted);max-width:600px;line-height:1.75;margin-bottom:1.5rem;font-weight:300}
+.meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2rem}
+.meta-tag{font-size:12px;padding:4px 12px;border-radius:99px;border:1px solid var(--border-mid);color:var(--muted)}
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2rem}
+.impact-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.impact-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--text);line-height:1.1;margin-bottom:4px}
+.impact-label{font-size:12px;color:var(--muted);line-height:1.5}
+.disclaimer{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:var(--radius-sm);padding:14px 18px;font-size:13px;color:var(--warn-text);line-height:1.6;margin-bottom:2rem}
+.wrap{max-width:860px;margin:0 auto;padding:0 2rem 3rem}
+.section-heading{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--text);margin:2rem 0 1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border)}
+.accordion{display:flex;flex-direction:column;gap:10px;margin-bottom:1rem}
+.acc-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.acc-trigger{width:100%;display:flex;align-items:center;gap:14px;padding:1.25rem 1.5rem;cursor:pointer;background:none;border:none;text-align:left;font-family:'DM Sans',sans-serif}
+.acc-trigger:hover{background:rgba(0,0,0,0.015)}
+.acc-icon{width:28px;height:28px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.25s;font-size:12px;color:var(--muted);order:-1}
+.acc-item.open .acc-icon{transform:rotate(180deg)}
+.acc-step-badge{font-size:11px;font-weight:500;color:var(--faint);background:var(--bg);padding:3px 10px;border-radius:99px;white-space:nowrap;flex-shrink:0;min-width:180px;text-align:center}
+.acc-title{flex:1;font-size:15px;font-weight:500;color:var(--text);line-height:1.3}
+.acc-subtitle{font-size:12px;color:var(--muted);margin-top:2px}
+.acc-body{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid var(--border)}
+.acc-item.open .acc-body{display:block}
+.step-cro{font-size:12px;color:var(--muted);margin:1.25rem 0 1.5rem;padding:8px 14px;background:var(--bg);border-radius:var(--radius-sm);display:inline-block;line-height:1.6}
+.step-cro strong{color:var(--text)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.block-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.block-label::before{content:'';width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.block-label.working{color:var(--success-text)}.block-label.working::before{background:var(--success)}
+.block-label.friction{color:var(--danger-text)}.block-label.friction::before{background:var(--danger)}
+.block-label.psych{color:var(--psych-text)}.block-label.psych::before{background:#7F77DD}
+.block-label.data{color:var(--teal-text)}.block-label.data::before{background:#1D9E75}
+.block-label.result{color:var(--accent-mid)}.block-label.result::before{background:var(--accent-mid)}
+.block-label.hypo{color:var(--info-text)}.block-label.hypo::before{background:var(--info)}
+.block-label.learn{color:var(--warn-text)}.block-label.learn::before{background:var(--warn)}
+.block-label.source{color:var(--faint)}.block-label.source::before{background:var(--faint)}
+.card{background:var(--bg);border-radius:var(--radius-sm);padding:1.125rem 1.25rem;margin-bottom:1rem}
+.card.working{border-left:3px solid var(--success)}
+.card.friction{border-left:3px solid var(--danger)}
+.card.psych{border-left:3px solid #7F77DD}
+.card.data{border-left:3px solid #1D9E75}
+.card.result{border-left:3px solid var(--accent-mid)}
+.card.hypo{border-left:3px solid var(--info)}
+.card.learn{border-left:3px solid var(--warn)}
+.card.neutral{border-left:3px solid var(--faint)}
+.card.source-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.125rem;margin-bottom:0}
+.items{list-style:none;padding:0}
+.items li{font-size:13px;color:var(--text);line-height:1.65;margin-bottom:8px;padding-left:16px;position:relative}
+.items li:last-child{margin-bottom:0}
+.items li::before{content:'';position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%}
+.items.working li::before{background:var(--success)}
+.items.friction li::before{background:var(--danger)}
+.items.psych li::before{background:#7F77DD}
+.items.data li::before{background:#1D9E75}
+.items.result li::before{background:var(--accent-mid)}
+.items.hypo li::before{background:var(--info)}
+.items.learn li::before{background:var(--warn)}
+.items.neutral li::before{background:var(--faint)}
+/* PSYCH PILL */
+.psych-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;background:var(--psych-bg);color:var(--psych-text);padding:3px 10px;border-radius:99px;margin:2px 3px 2px 0}
+.psych-pills{margin:0.75rem 0 0.5rem;flex-wrap:wrap;display:flex;gap:4px}
+/* SOURCE INLINE */
+.source-inline{font-size:11px;color:var(--faint);font-style:italic;margin-top:4px;display:block}
+/* FUNNEL */
+.funnel-steps{display:flex;flex-direction:column;gap:6px;margin:1rem 0}
+.funnel-step-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.funnel-step-row.changed{border-left:3px solid var(--success);background:var(--success-bg)}
+.funnel-step-row.friction{border-left:3px solid var(--danger);background:var(--danger-bg)}
+.funnel-step-num{font-size:11px;font-weight:500;color:var(--faint);min-width:20px}
+.funnel-step-name{font-size:13px;color:var(--text);flex:1}
+.funnel-step-note{font-size:11px;color:var(--muted);text-align:right;max-width:260px}
+.funnel-arrow{text-align:center;font-size:12px;color:var(--faint);padding:2px 0}
+/* RESULT GRID */
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1rem 0}
+.result-item{background:var(--surface);border-radius:var(--radius-sm);padding:1rem;text-align:center}
+.result-num{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);margin-bottom:4px}
+.result-label{font-size:11px;color:var(--muted);line-height:1.4}
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0}
+.timeline-item{display:flex;gap:16px;padding-bottom:1.25rem;position:relative}
+.timeline-item::before{content:'';position:absolute;left:11px;top:24px;bottom:0;width:1px;background:var(--border)}
+.timeline-item:last-child::before{display:none}
+.timeline-dot{width:24px;height:24px;border-radius:50%;background:var(--accent-light);border:2px solid var(--accent-mid);flex-shrink:0;margin-top:2px}
+.timeline-label{font-size:11px;font-weight:500;color:var(--accent-mid);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
+.timeline-text{font-size:13px;color:var(--muted);line-height:1.65}
+/* SOURCES GRID */
+.sources-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
+.source-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.125rem}
+.source-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.source-url{font-size:11px;color:var(--info-text);margin-bottom:5px;font-family:monospace}
+.source-desc{font-size:12px;color:var(--muted);line-height:1.55}
+
+.gallery-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.gallery-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;cursor:pointer;transition:box-shadow 0.15s}
+.gallery-item:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1)}
+.gallery-item-label{font-size:12px;color:var(--muted);padding:8px 10px;line-height:1.4}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999;align-items:center;justify-content:center;padding:2rem}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:90vh;border-radius:var(--radius-sm);object-fit:contain}
+.lightbox-close{position:fixed;top:1.5rem;right:1.5rem;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);color:#fff;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+hr.divider{border:none;border-top:1px solid var(--border);margin:0}
+.footer-note{text-align:center;padding:2rem;font-size:13px;color:var(--muted)}
+.footer-note a{color:var(--accent-mid);text-decoration:none}
+@media(max-width:640px){
+  .two-col{grid-template-columns:1fr}
+  .impact-grid{grid-template-columns:1fr 1fr}
+  .result-grid{grid-template-columns:1fr 1fr}
+  .sources-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999;align-items:center;justify-content:center;padding:2rem" onclick="closeLightbox()">
+  <button style="position:fixed;top:1.5rem;right:1.5rem;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);color:#fff;border:none;cursor:pointer;font-size:18px" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="" style="max-width:100%;max-height:90vh;border-radius:8px;object-fit:contain">
+</div>
+<nav>
+  <a href="/index.html" class="nav-back">← Back to portfolio</a>
+  <a href="/index.html" class="nav-name">Josué Cornejo</a>
+</nav>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Funnel Optimization · Growth PM · Healthcare CRO</div>
+  <h1>Agendamiento 2.0 — <em>a full optimization program</em> for Blue Medical's scheduling platform</h1>
+  <p class="hero-sub">How I led a structured conversion optimization program across Blue Medical's core scheduling funnel — reducing drop-off, cutting booking time, and shifting volume from high-cost channels to self-service digital.</p>
+  <div class="meta-row">
+    <span class="meta-tag">Blue Medical</span>
+    <span class="meta-tag">Guatemala & Costa Rica</span>
+    <span class="meta-tag">March 2022 – May 2024</span>
+    <span class="meta-tag">Program Manager</span>
+    <span class="meta-tag">GA4 · Hotjar · Power BI</span>
+    <a href="https://app.mibluemedical.com/" target="_blank" rel="noopener" class="meta-tag" style="color:var(--accent-mid);text-decoration:none;border-color:var(--accent-mid)">View live product ↗</a>
+  </div>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-num">~25%</div>
+      <div class="impact-label">reduction in average time-to-book after smart suggestions feature</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">~+50%</div>
+      <div class="impact-label">relative lift in funnel completion rate from guest checkout (6–8% → 9–9.5%)</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">500–700</div>
+      <div class="impact-label">daily appointments in Guatemala — each one a revenue entry point for labs, prescriptions & imaging</div>
+    </div>
+  </div>
+  <div class="disclaimer">
+    <strong>Confidentiality note:</strong> Metrics are approximated and ranges are used to protect NDA obligations. All figures reflect real work on live products. Specific client data, system architecture, and operational details have been omitted or generalized.
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- BUSINESS CONTEXT -->
+<div class="section-heading">Business context</div>
+<div class="accordion">
+  <div class="acc-item open" id="acc-ctx">
+    <button class="acc-trigger" onclick="toggle('acc-ctx')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Why this mattered</span>
+      <div style="flex:1">
+        <div class="acc-title">Scheduling was the engine of Blue Medical's entire revenue model</div>
+        <div class="acc-subtitle">One-stop health platform · Cross-sell dependency · Contact center cost pressure</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:1.25rem">Blue Medical's value proposition was being a one-stop shop for all health services — consultations, labs, imaging, and medications. But this model had a critical dependency: <strong>every downstream revenue stream started with a scheduled appointment.</strong> Without the consultation, doctors couldn't recommend labs or prescriptions. Without the recommendation, cross-sell revenue dropped across the entire company. Optimizing the scheduling funnel was not a UX project — it was a <strong>revenue growth initiative.</strong></p>
+      <div class="two-col">
+        <div>
+          <div class="block-label working">The opportunity</div>
+          <div class="card working">
+            <ul class="items working">
+              <li>55–60% of appointments were booked through the contact center — a high-cost channel with limited scalability. Only 28–34% came through self-service digital.</li>
+              <li>With 6,500–8,000 daily unique sessions and a funnel completion rate of only 6–8%, the gap between traffic and conversion was significant and largely recoverable.</li>
+              <li>Shifting contact center volume to digital would reduce cost per appointment while improving the patient experience — a compounding return.</li>
+              <li>The patient base included elderly users and young adults booking for dependents — segments with specific friction profiles worth addressing through targeted UX changes.</li>
+            </ul>
+          </div>
+          <div class="psych-pills">
+            <span class="psych-pill">🧠 Activation rate</span>
+            <span class="psych-pill">🧠 Channel mix</span>
+            <span class="psych-pill">🧠 Cost per conversion</span>
+          </div>
+        </div>
+        <div>
+          <div class="block-label friction">The problems</div>
+          <div class="card friction">
+            <ul class="items friction">
+              <li><strong>High abandonment rate</strong> — users dropped off at multiple funnel steps. The booking completion rate of 6–8% indicated that most sessions generated zero revenue value.</li>
+              <li><strong>Long average time-to-book</strong> — users cycled between specialty → clinic → doctor → time slot when availability was low, creating mid-funnel fatigue and abandonment.</li>
+              <li><strong>Mandatory login wall</strong> — users had to authenticate before seeing any availability, creating friction before value at the top of the funnel.</li>
+              <li><strong>No-show rate</strong> — with no payment required at booking, a portion of completed bookings didn't convert to attended consultations — an operational leak downstream from the digital funnel.</li>
+            </ul>
+          </div>
+          <span class="source-inline">Industry context: only 11% of medical groups report that most patients schedule with digital tools (MGMA, Nov 2024) — making digital conversion a significant competitive differentiator.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- METHODOLOGY -->
+<div class="section-heading">Methodology — the Agendamiento 2.0 program</div>
+<div class="accordion">
+  <div class="acc-item" id="acc-method">
+    <button class="acc-trigger" onclick="toggle('acc-method')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Program structure</span>
+      <div style="flex:1">
+        <div class="acc-title">A systematic optimization engine — not a one-off redesign</div>
+        <div class="acc-subtitle">Heuristic evaluation · Observation backlog · Hypothesis-driven experiments · Pre/post measurement</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:1.25rem">My recommendation was to treat scheduling improvement as a <strong>continuous optimization program</strong> rather than a single redesign project. We named the initiative <em>Agendamiento 2.0</em>. The program followed four iterative layers — each feeding the next.</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-label">Layer 1 — Discovery & instrumentation</div>
+            <div class="timeline-text">Established baseline measurement using GA4 funnel analysis, Hotjar session recordings and heatmaps, Power BI dashboards connected to internal scheduling and clinical systems, and NPS data from the internal quality control team. The CEO tracked contact center cost closely — that was our business north star from day one. <em class="source-inline">Per growth.design: measuring baseline behavior before forming hypotheses is a prerequisite for avoiding Confirmation Bias — the tendency to look for evidence that confirms what we already believe.</em></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-label">Layer 2 — Heuristic evaluation</div>
+            <div class="timeline-text">The first structured output of the program was a heuristic evaluation of the existing platform — reviewing every step of the funnel against UX principles. This is where we identified the login wall, the mid-funnel looping behavior, and several UI-level issues. Each finding was documented with its estimated impact before any solution was designed.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-label">Layer 3 — Hypothesis backlog</div>
+            <div class="timeline-text">Each observation generated a structured hypothesis: what we believed was causing the problem, what change would test it, and what metric would tell us if we were right. This discipline — borrowed from outcome-driven product frameworks — kept the team focused on why we were building each change, not just what to build next.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-label">Layer 4 — Incremental experiments + pre/post measurement</div>
+            <div class="timeline-text">With ~6,500–8,000 daily sessions and a funnel completion rate of 6–8%, formal A/B testing would have required 3–4 months of runtime per experiment to reach statistical significance for a 10% relative lift. We used pre/post measurement via GA4 as the primary validation method, with Hotjar behavioral data as a qualitative signal. <em class="source-inline">Research note: healthcare CRO is uniquely complex because trust and compliance add friction that standard e-commerce benchmarks don't account for (Geonetric, 2025; Fetch and Funnel, 2025).</em></div>
+          </div>
+        </div>
+      </div>
+      <div class="card neutral" style="margin-top:0.5rem">
+        <div style="font-size:13px;color:var(--muted);line-height:1.65"><strong style="color:var(--text)">On A/B testing:</strong> The session volume made statistically significant A/B testing impractical for our iteration pace. Pre/post measurement with behavioral validation was the right tradeoff for the context. A formal testing infrastructure would have been the next investment as traffic scaled — and remains a gap I would close first in a similar program today.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FUNNEL MAP -->
+<div class="section-heading">Funnel map</div>
+<div class="accordion">
+  <div class="acc-item" id="acc-funnel">
+    <button class="acc-trigger" onclick="toggle('acc-funnel')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Full journey</span>
+      <div style="flex:1">
+        <div class="acc-title">9-step scheduling funnel — where users dropped and what we changed</div>
+        <div class="acc-subtitle">TOFU → MOFU → Conversion · GA4 funnel analysis · Hotjar session recordings · Power BI event logs</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="step-cro">CRO stages: <strong>Acquisition (TOFU) → Activation (MOFU) → Conversion (BOFU)</strong> &nbsp;·&nbsp; Primary metric: <strong>Appointment completion rate per session · Time-to-book · Drop-off rate per step</strong></div>
+      <div class="funnel-steps">
+        <div class="funnel-step-row">
+          <div class="funnel-step-num">1</div>
+          <div class="funnel-step-name">Enter scheduling platform</div>
+          <div class="funnel-step-note">6,500–8,000 daily unique sessions (Guatemala)</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row">
+          <div class="funnel-step-num">2</div>
+          <div class="funnel-step-name">Country selection</div>
+          <div class="funnel-step-note">Auto-detected via location permission; manual otherwise</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row friction">
+          <div class="funnel-step-num">3</div>
+          <div class="funnel-step-name">⚠ Login required — major drop-off point</div>
+          <div class="funnel-step-note">Friction before value. Especially painful for elderly users & dependents</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row changed">
+          <div class="funnel-step-num">3+</div>
+          <div class="funnel-step-name">✓ Guest access added (Experiment 1)</div>
+          <div class="funnel-step-note">Continue without account until after slot selection</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row">
+          <div class="funnel-step-num">4</div>
+          <div class="funnel-step-name">In-person or virtual appointment</div>
+          <div class="funnel-step-note">Not all specialties available virtually</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row friction">
+          <div class="funnel-step-num">5</div>
+          <div class="funnel-step-name">⚠ Specialty selection — looping begins here</div>
+          <div class="funnel-step-note">Low availability in some specialties caused back-navigation cycles</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row changed">
+          <div class="funnel-step-num">5+</div>
+          <div class="funnel-step-name">✓ Smart suggestions added (Experiment 2)</div>
+          <div class="funnel-step-note">3 nearest slots by location + returning patient's recent doctor</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row">
+          <div class="funnel-step-num">6</div>
+          <div class="funnel-step-name">Clinic selection</div>
+          <div class="funnel-step-note">Multiple clinics per city — users cycled back here when no slot found</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row">
+          <div class="funnel-step-num">7</div>
+          <div class="funnel-step-name">Doctor selection or auto-assign</div>
+          <div class="funnel-step-note">Users could allow system to select best available doctor</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row">
+          <div class="funnel-step-num">8</div>
+          <div class="funnel-step-name">Time slot selection</div>
+          <div class="funnel-step-note">Low availability = abandonment if no convenient slot found</div>
+        </div>
+        <div class="funnel-arrow">↓</div>
+        <div class="funnel-step-row working">
+          <div class="funnel-step-num">9</div>
+          <div class="funnel-step-name">Confirm & book ✓</div>
+          <div class="funnel-step-note">6–8% of sessions reached this step at baseline</div>
+        </div>
+      </div>
+      <div class="card neutral" style="margin-top:1rem">
+        <div style="font-size:13px;color:var(--muted);line-height:1.65"><strong style="color:var(--text)">Payment note:</strong> Payment was not collected at booking — patients paid in clinic. While this removed a checkout friction point, it also meant no financial commitment from the patient, contributing to a no-show rate that was a known operational challenge independent of the digital funnel optimization.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIMENTS -->
+<div class="section-heading">Experiments</div>
+<div class="accordion">
+
+  <!-- EXP 0 -->
+  <div class="acc-item" id="acc-exp0">
+    <button class="acc-trigger" onclick="toggle('acc-exp0')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Experiment 0 · Rebranding</span>
+      <div style="flex:1">
+        <div class="acc-title">UI rebranding — buttons, colors, and flow simplification</div>
+        <div class="acc-subtitle">Heuristic evaluation → design changes → Result: not statistically significant</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="step-cro">CRO stage: <strong>Full funnel</strong> &nbsp;·&nbsp; Hypothesis type: <strong>Usability improvement</strong> &nbsp;·&nbsp; Expected metric: <strong>Overall funnel completion rate</strong></div>
+      <div class="two-col">
+        <div>
+          <div class="block-label hypo">Hypothesis</div>
+          <div class="card hypo">
+            <ul class="items hypo">
+              <li>The platform's visual design created unnecessary cognitive friction — unclear button hierarchy, inconsistent colors, and redundant steps that could be simplified without changing core functionality.</li>
+              <li>A cleaner, more intuitive UI following heuristic principles would reduce confusion and improve completion rate across the full funnel.</li>
+            </ul>
+          </div>
+          <div class="psych-pills">
+            <span class="psych-pill">🧠 Cognitive Load</span>
+            <span class="psych-pill">🧠 Visual Hierarchy</span>
+            <span class="psych-pill">🧠 Signifiers</span>
+            <span class="psych-pill">🧠 Aesthetic-Usability Effect</span>
+          </div>
+          <div class="block-label data" style="margin-top:1rem">What we did</div>
+          <div class="card data">
+            <ul class="items data">
+              <li>Conducted a formal heuristic evaluation of the existing platform against UX principles.</li>
+              <li>Redesigned button styles, color hierarchy, and simplified several flow steps without adding new functionality.</li>
+              <li>Measured funnel completion rate pre/post via GA4 across comparable time periods.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label learn">Result — not significant. A critical lesson.</div>
+          <div class="card learn">
+            <ul class="items learn">
+              <li>The rebranding did not produce a meaningful change in funnel completion rate. Changes were directionally positive but within measurement noise.</li>
+              <li><strong>The most important learning of the program:</strong> the problem was not visual design — it was structural friction in the flow architecture. Mandatory login and inefficient slot discovery were behavioral blockers, not aesthetic ones.</li>
+              <li>This result redirected our entire hypothesis backlog toward flow-level interventions. The rebranding became the visual foundation for future changes rather than the conversion solution itself.</li>
+              <li>I include this result deliberately — shipping something, measuring it honestly, calling it a loser, and learning from it is how good optimization programs work.</li>
+            </ul>
+          </div>
+          <div class="card neutral" style="margin-top:0">
+            <div style="font-size:12px;color:var(--muted);line-height:1.6"><strong style="color:var(--text)">Principle applied:</strong> <em>Law of the Instrument</em> (growth.design) — "if all you have is a hammer, everything looks like a nail." We were initially applying a visual design solution to what was fundamentally a flow architecture problem. The data corrected our framing.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXP 1 -->
+  <div class="acc-item" id="acc-exp1">
+    <button class="acc-trigger" onclick="toggle('acc-exp1')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Experiment 1 · Guest checkout</span>
+      <div style="flex:1">
+        <div class="acc-title">Remove the login wall — guest access before booking</div>
+        <div class="acc-subtitle">TOFU friction removal · 6–8% → 9–9.5% funnel completion rate · ~+50% relative lift</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="step-cro">CRO stage: <strong>Acquisition → Activation (TOFU)</strong> &nbsp;·&nbsp; Primary metric: <strong>Funnel completion rate · % sessions reaching appointment type selection · Drop-off rate at login step</strong></div>
+      <div class="two-col">
+        <div>
+          <div class="block-label hypo">Hypothesis</div>
+          <div class="card hypo">
+            <ul class="items hypo">
+              <li>Requiring login before showing any availability creates <strong>friction before value</strong> — users are asked to invest (create an account or recall credentials) before seeing whether the product can serve their need at all.</li>
+              <li>This friction was amplified for two specific user segments: elderly patients unfamiliar with account management, and young adults booking on behalf of parents or children who had to manage dependent accounts.</li>
+              <li><strong>Hypothesis:</strong> removing the mandatory login wall and allowing guest access will increase the % of sessions reaching mid-funnel steps and ultimately completing a booking.</li>
+            </ul>
+          </div>
+          <div class="psych-pills">
+            <span class="psych-pill">🧠 Reactance</span>
+            <span class="psych-pill">🧠 Effort Heuristic</span>
+            <span class="psych-pill">🧠 Cognitive Load</span>
+            <span class="psych-pill">🧠 Sunk Cost (post-value)</span>
+            <span class="psych-pill">🧠 Progressive Disclosure</span>
+          </div>
+          <div class="block-label data" style="margin-top:1rem">Discovery inputs</div>
+          <div class="card data">
+            <ul class="items data">
+              <li><strong>GA4 funnel:</strong> sharp, disproportionate drop-off at the login step — the exit rate here far exceeded what the step's complexity warranted.</li>
+              <li><strong>Hotjar session recordings:</strong> rage clicks on the login form, repeated back-navigation, and session abandonment immediately after seeing the login screen.</li>
+              <li><strong>NPS / quality control:</strong> "difficulty logging in" appeared as a recurring complaint in patient satisfaction data.</li>
+              <li><strong>Contact center signal:</strong> agents received calls from users who had forgotten credentials and needed help booking — a quantifiable cost signal that supported the business case.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label result">Result</div>
+          <div class="card result">
+            <div class="result-grid" style="margin-bottom:0.75rem">
+              <div class="result-item">
+                <div class="result-num">6–8%</div>
+                <div class="result-label">funnel completion rate (baseline)</div>
+              </div>
+              <div class="result-item">
+                <div class="result-num">9–9.5%</div>
+                <div class="result-label">funnel completion rate (post-launch)</div>
+              </div>
+              <div class="result-item">
+                <div class="result-num">~+50%</div>
+                <div class="result-label">relative improvement in completion rate</div>
+              </div>
+            </div>
+            <ul class="items result">
+              <li>More sessions reached the appointment type selection step and progressed through mid-funnel steps after removing the mandatory login requirement.</li>
+              <li>Booking volume began shifting directionally from contact center and social media channels toward self-service digital — aligned with the primary business objective.</li>
+              <li>Measurement: pre/post via GA4 across comparable time periods. No formal A/B framework in place — directional confidence, not causal proof.</li>
+            </ul>
+          </div>
+          <div class="block-label psych" style="margin-top:1rem">Psychology in depth</div>
+          <div class="card psych">
+            <ul class="items psych">
+              <li><strong>Reactance</strong> (growth.design): users are less likely to adopt a behavior when they feel forced. "Log in to see availability" is coercive — it triggers resistance before the user has experienced any product value.</li>
+              <li><strong>Effort Heuristic</strong>: the perceived cost of logging in exceeded the perceived value of continuing, especially for users with low digital fluency or who were booking for someone else.</li>
+              <li><strong>Progressive Disclosure</strong>: asking for authentication after the user has chosen a slot — when they're already committed — is a far lower-resistance moment than asking before they've seen anything.</li>
+            </ul>
+          </div>
+
+          <span class="source-inline">Supporting research: trust and compliance friction in healthcare funnels is uniquely high — simplifying authentication flows is one of the highest-impact CRO levers in the sector (Fetch and Funnel, 2025; Geonetric, 2025).</span>
+        </div>
+      </div>
+      <div class="gallery" style="margin-top:1.5rem">
+        <div class="gallery-label">Screenshot — guest access flow</div>
+        <div class="gallery-grid" style="grid-template-columns:1fr">
+          <div class="gallery-item" onclick="openLightbox('https://res.cloudinary.com/dezggsyyg/image/upload/v1780858421/AgendamientoInvitado_bknkua.png')">
+            <img src="https://res.cloudinary.com/dezggsyyg/image/upload/v1780858421/AgendamientoInvitado_bknkua.png" alt="Guest scheduling flow — Blue Medical" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;border-radius:var(--radius-sm) var(--radius-sm) 0 0">
+            <div class="gallery-item-label">Guest access option — login wall removed, users can book without creating an account</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EXP 2 -->
+  <div class="acc-item" id="acc-exp2">
+    <button class="acc-trigger" onclick="toggle('acc-exp2')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Experiment 2 · Smart suggestions</span>
+      <div style="flex:1">
+        <div class="acc-title">Smart scheduling suggestions — eliminate mid-funnel looping</div>
+        <div class="acc-subtitle">MOFU friction removal · ~25% reduction in average time-to-book</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="step-cro">CRO stage: <strong>Activation → Conversion (MOFU → BOFU)</strong> &nbsp;·&nbsp; Primary metric: <strong>Average time-to-book · Mid-funnel drop-off rate · Overall completion rate</strong></div>
+      <div class="two-col">
+        <div>
+          <div class="block-label hypo">Hypothesis</div>
+          <div class="card hypo">
+            <ul class="items hypo">
+              <li>The core mid-funnel problem was not that users didn't want to book — it was that the funnel architecture required them to navigate specialty → clinic → doctor → time slot sequentially, with no visibility into availability until the final step. This caused back-navigation loops that eroded time and motivation.</li>
+              <li><strong>Hypothesis:</strong> surfacing the 3 nearest available slots by location immediately after specialty selection — bypassing the full clinic/doctor/slot chain — will reduce time-to-book and decrease mid-funnel abandonment.</li>
+              <li>Secondary: returning patients with a recent doctor would benefit from that doctor's next availability surfaced proactively, reducing re-selection friction.</li>
+            </ul>
+          </div>
+          <div class="psych-pills">
+            <span class="psych-pill">🧠 Goal Gradient Effect</span>
+            <span class="psych-pill">🧠 Choice Architecture</span>
+            <span class="psych-pill">🧠 Recognition over Recall</span>
+            <span class="psych-pill">🧠 Decision Fatigue</span>
+            <span class="psych-pill">🧠 Paradox of Choice</span>
+          </div>
+          <div class="block-label data" style="margin-top:1rem">Discovery inputs</div>
+          <div class="card data">
+            <ul class="items data">
+              <li><strong>Hotjar session recordings:</strong> clear back-navigation patterns — users selecting a clinic, finding no convenient slot, going back, trying another clinic, repeating 2–3 times before abandoning.</li>
+              <li><strong>GA4 event logs:</strong> elevated time-on-steps for clinic and doctor selection — disproportionate to what those steps should require.</li>
+              <li><strong>Power BI data:</strong> certain specialties had concentrated availability in specific clinics — users were often searching in the wrong places first.</li>
+              <li><strong>Contact center insight:</strong> agents were manually doing exactly what we built — finding the nearest available slot for the patient's specialty and location. The feature was already proven to work operationally.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label result">Result</div>
+          <div class="card result">
+            <div class="result-grid" style="margin-bottom:0.75rem">
+              <div class="result-item">
+                <div class="result-num">~25%</div>
+                <div class="result-label">reduction in average time-to-book</div>
+              </div>
+              <div class="result-item">
+                <div class="result-num">↑</div>
+                <div class="result-label">overall completion rate (combined effect with Exp 1)</div>
+              </div>
+              <div class="result-item">
+                <div class="result-num">↓</div>
+                <div class="result-label">contact center & social media booking volume</div>
+              </div>
+            </div>
+            <ul class="items result">
+              <li>Average scheduling time dropped ~25% — measured via GA4 session duration on the scheduling flow and system event timestamps in Power BI.</li>
+              <li>Booking volume continued shifting toward self-service digital, supporting the business objective of reducing contact center cost per appointment.</li>
+              <li>Users retained the option to skip suggestions and browse manually — adoption was voluntary, preserving experience quality for users with specific preferences.</li>
+            </ul>
+          </div>
+          <div class="block-label psych" style="margin-top:1rem">Psychology in depth</div>
+          <div class="card psych">
+            <ul class="items psych">
+              <li><strong>Goal Gradient Effect</strong> (growth.design): motivation increases as users perceive they're closer to their goal. Showing 3 specific available slots immediately after specialty selection makes the finish line feel closer — reducing the likelihood of abandonment.</li>
+              <li><strong>Paradox of Choice / Decision Fatigue</strong> (growth.design): presenting 3 curated, relevant options rather than asking users to navigate an open search tree reduces the cognitive cost of deciding. Fewer, better options outperform more options.</li>
+              <li><strong>Recognition over Recall</strong> (growth.design): returning patients seeing their doctor's name surfaced proactively reduces cognitive load compared to manually remembering and searching for them again.</li>
+            </ul>
+          </div>
+
+          <span class="source-inline">Supporting research: digital scheduling tools that reduce time-to-book improve patient satisfaction and reduce no-show rates by making the booking feel effortless rather than effortful (MGMA, 2024).</span>
+        </div>
+      </div>
+      <div class="gallery" style="margin-top:1.5rem">
+        <div class="gallery-label">Screenshot — smart suggestions feature</div>
+        <div class="gallery-grid" style="grid-template-columns:1fr">
+          <div class="gallery-item" onclick="openLightbox('https://res.cloudinary.com/dezggsyyg/image/upload/v1780858421/Sugerencias_nap95o.png')">
+            <img src="https://res.cloudinary.com/dezggsyyg/image/upload/v1780858421/Sugerencias_nap95o.png" alt="Smart scheduling suggestions — Blue Medical" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;border-radius:var(--radius-sm) var(--radius-sm) 0 0">
+            <div class="gallery-item-label">Smart suggestions — 3 nearest available slots shown immediately after specialty selection</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery" style="margin-top:1.5rem">
+        <div class="gallery-label" style="font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--faint);margin-bottom:10px">Screenshot — smart suggestions</div>
+        <div style="display:grid;grid-template-columns:1fr;gap:10px;max-width:520px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;cursor:pointer" onclick="openLightbox('https://res.cloudinary.com/dezggsyyg/image/upload/v1780858421/Sugerencias_nap95o.png')">
+            <img src="https://res.cloudinary.com/dezggsyyg/image/upload/v1780858421/Sugerencias_nap95o.png" alt="Smart suggestions" style="width:100%;height:200px;object-fit:cover;object-position:top;display:block">
+            <div style="font-size:11px;color:var(--muted);padding:8px 10px">Smart suggestions — 3 nearest available slots surfaced immediately after specialty selection</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- LEARNINGS -->
+<div class="section-heading">What I learned & what comes next</div>
+<div class="accordion">
+  <div class="acc-item" id="acc-learn">
+    <button class="acc-trigger" onclick="toggle('acc-learn')">
+      <div class="acc-icon">▼</div>
+      <span class="acc-step-badge">Reflection</span>
+      <div style="flex:1">
+        <div class="acc-title">Key learnings from 2 years of iterative optimization</div>
+        <div class="acc-subtitle">What worked · What didn't · What I'd do differently · Roadmap at departure</div>
+      </div>
+    </button>
+    <div class="acc-body">
+      <div class="two-col">
+        <div>
+          <div class="block-label learn">What I learned</div>
+          <div class="card learn">
+            <ul class="items learn">
+              <li><strong>Small incremental steps compound.</strong> The rebranding alone moved nothing. Guest checkout alone moved something. Combined with smart suggestions, the program produced a meaningful shift in channel mix and completion rate. No single experiment was a silver bullet — the program was the product.</li>
+              <li><strong>Diagnose the layer of the problem before designing the solution.</strong> We initially applied a visual solution (rebranding) to what was a structural flow problem (login wall, slot discovery). The null result from Experiment 0 was the most valuable data point of the program — it redirected us to the real problem.</li>
+              <li><strong>Qualitative + quantitative signals together move faster.</strong> Hotjar session recordings consistently surfaced the right problems faster than GA4 alone. The combination of behavioral observation and funnel data was more powerful than either tool in isolation.</li>
+              <li><strong>Business context shapes what you optimize for.</strong> We weren't just optimizing conversion rate — we were optimizing cost per appointment and channel mix. Keeping the downstream revenue dependency visible shaped every prioritization decision.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="block-label data">What I'd do differently</div>
+          <div class="card data">
+            <ul class="items data">
+              <li><strong>Invest earlier in A/B testing infrastructure.</strong> Pre/post worked for our volume, but isolating individual experiment contributions was difficult. A proper testing layer would have allowed faster and more confident learning cycles as traffic grew.</li>
+              <li><strong>Connect advertising investment to funnel behavior earlier.</strong> We lacked a clean attribution model linking paid campaign users to scheduling completions — making ROI conversations on marketing spend difficult and limiting our ability to optimize acquisition.</li>
+              <li><strong>Address the no-show problem in parallel.</strong> A meaningful percentage of booked appointments didn't convert to attended consultations — affecting downstream revenue regardless of digital funnel improvements. This required operational intervention alongside product work.</li>
+            </ul>
+          </div>
+          <div class="block-label result" style="margin-top:1rem">Roadmap items at departure</div>
+          <div class="card result">
+            <ul class="items result">
+              <li>One-click rebooking via email for follow-ups and pre-scheduled check-ups.</li>
+              <li>Overbooking logic to fill no-show slots and increase clinic utilization.</li>
+              <li>Payment integration — requiring a strategic decision on insurance inclusion vs. launch without, which would have excluded ~55–65% of the patient base initially.</li>
+              <li>Enhanced suggestions incorporating doctor ratings, wait time estimates, and patient history for personalization at scale.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="section-heading">Sources</div>
+<div class="sources-grid">
+  <div class="source-card">
+    <div class="source-name">Growth.Design — 106 Cognitive Biases</div>
+    <div class="source-url">growth.design/psychology</div>
+    <div class="source-desc">Applied reference for cognitive biases in product design. Principles cited: Reactance, Goal Gradient Effect, Paradox of Choice, Decision Fatigue, Recognition over Recall, Progressive Disclosure, Effort Heuristic, Law of the Instrument, Aesthetic-Usability Effect.</div>
+  </div>
+  <div class="source-card">
+    <div class="source-name">MGMA Stat Polls 2024</div>
+    <div class="source-url">mgma.com/mgma-stat</div>
+    <div class="source-desc">Only 11% of medical groups report most patients schedule digitally (Nov 2024). Only 13% of groups report lower no-show rates in 2024 vs 2023 (Aug 2024). Context for digital scheduling opportunity and operational challenges.</div>
+  </div>
+  <div class="source-card">
+    <div class="source-name">Fetch and Funnel — Healthcare CRO 2025</div>
+    <div class="source-url">fetchfunnel.com/conversion-rate-optimization-for-healthcare</div>
+    <div class="source-desc">Healthcare CRO is uniquely challenging because trust and compliance add friction that standard e-commerce benchmarks don't account for. Simplicity consistently outperforms visual complexity in healthcare conversion.</div>
+  </div>
+  <div class="source-card">
+    <div class="source-name">Geonetric — Healthcare CRO 2025</div>
+    <div class="source-url">geonetric.com/insights/digital-strategy</div>
+    <div class="source-desc">CRO in healthcare requires simultaneously building patient trust while minimizing conversion friction. Authentication flows are one of the highest-impact optimization levers in the sector.</div>
+  </div>
+</div>
+
+</div><!-- end wrap -->
+
+<hr class="divider">
+<div class="footer-note">
+  <a href="/index.html">← Back to portfolio</a> &nbsp;·&nbsp; <a href="#top">↑ Top</a>
+</div>
+
+<script>
+function openLightbox(src){
+  document.getElementById('lightbox-img').src=src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox()});
+function toggle(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
